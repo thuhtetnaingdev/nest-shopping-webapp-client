@@ -1,48 +1,43 @@
-import { useState } from "react";
-import { Box, Image, MediaQuery } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { Box, Image } from "@mantine/core";
+import Iu from "../../public/images/iu.png";
+import Iu2 from "../../public/images/iu2.jpg";
+import Iu3 from "../../public/images/iu3.jpg";
 import "./imageCarousel.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function ImageCarousel() {
-  const matches = useMediaQuery("(max-width: 600px)");
-  const [slide, setSlide] = useState<number>(1);
-  const showSlides = () => {
-    if (slide === 2) {
-      return setSlide(1);
-    } else {
-      return setSlide(slide + 1);
-    }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
   };
-  return (
-    <Box sx={{ width: "100%", position: "relative" }} mx="auto">
-      <div className="sideshow-container">
-        <div
-          className="mySlides fade"
-          style={{ display: slide === 1 ? "block" : "none" }}
-        >
-          <Image
-            width="100%"
-            height={matches ? "200px" : "400px"}
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.k-popmag.com%2Fcontent%2Fimages%2F2019%2F11%2Fhdl.jpeg&f=1&nofb=1"
-          />
-        </div>
 
-        <div
-          className="mySlides fade"
-          style={{ display: slide === 2 ? "block" : "none" }}
-        >
-          <Image
-            width="100%"
-            height={matches ? "200px" : "400px"}
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.billboard.com%2Ffiles%2F2020%2F05%2Fiu-feb-2020-billboard-1548-1589305869-1024x677.jpg&f=1&nofb=1"
-          />
-        </div>
-        <div className="prev" onClick={showSlides}>
-          &#10094;
-        </div>
-        <div className="next" onClick={showSlides}>
-          &#10095;
-        </div>
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        position: "relative",
+      }}
+      mb="xl"
+    >
+      <div>
+        <Slider {...settings}>
+          <Box>
+            <Image src={Iu} />
+          </Box>
+          <Box>
+            <Image src={Iu2} />
+          </Box>
+          <Box>
+            <Image src={Iu3} />
+          </Box>
+        </Slider>
       </div>
     </Box>
   );

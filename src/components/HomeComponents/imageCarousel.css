@@ -1,9 +1,3 @@
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
-}
-
 .prev,
 .next {
   cursor: pointer;
@@ -15,43 +9,12 @@
   color: white;
   font-weight: bold;
   font-size: 18px;
-  transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
 }
 
+/* Position the "next button" to the right */
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
-}
-
-.active,
-.dot:hover {
-  background-color: #717171;
-}
-
-/* Fading animation */
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@-webkit-keyframes fade {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fade {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
-  }
 }

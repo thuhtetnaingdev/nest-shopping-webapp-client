@@ -1,6 +1,7 @@
-import { Box, CSSObject, Grid } from "@mantine/core";
+import { Box, CSSObject, Grid, Image } from "@mantine/core";
 import ItemHeaderAnchor from "./ItemHeaderAnchor";
 import Matches from "../../cors/MediaQuery";
+import beauty from "../../public/images/beauty.png";
 
 export default function Categories() {
   type DataType = {
@@ -11,7 +12,7 @@ export default function Categories() {
   const matches = Matches().mdMatches;
   const CatagoryData: DataType[] = [
     {
-      image: "",
+      image: beauty,
       catagory: "Beauty picks",
     },
     {
@@ -39,7 +40,18 @@ export default function Categories() {
       <Grid mt="lg" sx={{ display: matches ? "none" : "" }}>
         {CatagoryData.map((item, i) => (
           <Grid.Col key={i} span={matches ? 6 : 3}>
-            <Box sx={gridStyle}></Box>
+            <Box sx={gridStyle}>
+              <Box>
+                <Image
+                  src={item.image}
+                  width={160}
+                  sx={{
+                    marginLeft: "110px",
+                    overflow: "hidden",
+                  }}
+                />
+              </Box>
+            </Box>
           </Grid.Col>
         ))}
       </Grid>

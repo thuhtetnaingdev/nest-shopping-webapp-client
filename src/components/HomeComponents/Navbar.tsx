@@ -14,11 +14,15 @@ import {
 import { useClickOutside } from "@mantine/hooks";
 import { useState } from "react";
 import { Search } from "tabler-icons-react";
+import AuthDrawer from "../AuthComponents/AuthDrawer";
+import Register from "../AuthComponents/Register";
 
 export default function Navbar() {
   const theme = useMantineTheme();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [openedModel, setOpenedModel] = useState<boolean>(false);
 
   const ref = useClickOutside(() => setIsOpen(false));
 
@@ -83,7 +87,10 @@ export default function Navbar() {
       </Grid.Col>
       <Grid.Col span={1}>
         <Center>
-          <Anchor variant="text">Login</Anchor>
+          <Anchor variant="text" onClick={() => setOpenedModel(true)}>
+            Login
+          </Anchor>
+          <AuthDrawer openedModel={openedModel} setOpenedModel={setOpenedModel} />
         </Center>
       </Grid.Col>
     </Grid>

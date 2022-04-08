@@ -1,10 +1,9 @@
-import { Box, Button, Grid, useMantineTheme, Text, Paper } from "@mantine/core";
-import { useScrollIntoView } from "@mantine/hooks";
-import { useState, useRef } from "react";
+import { Box, Grid, useMantineTheme, Text } from "@mantine/core";
+import { useState } from "react";
 import Matches from "../../cors/MediaQuery";
 
 export default function PopularItems() {
-  const [items, setItems] = useState([{}, {}, {}, {}, {}]);
+  const [items, setItems] = useState([{}, {}, {}, {}, {}, {}]);
 
   const theme = useMantineTheme();
   const mdMatches = Matches().mdMatches;
@@ -14,13 +13,15 @@ export default function PopularItems() {
         columns={10}
         sx={{
           height: "",
+          display: "flex",
+          flexWrap: "nowrap",
+          overflow: "auto",
         }}
       >
         {items.map((item, i) => (
           <Grid.Col key={i} span={mdMatches ? 5 : 2} sx={{ minWidth: 0 }}>
             <Box
               sx={{
-                width: "100%",
                 height: "250px",
                 backgroundColor: theme.colors.gray[2],
               }}
