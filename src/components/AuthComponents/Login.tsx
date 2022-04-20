@@ -30,7 +30,7 @@ export default function Login(props: { isClickedLogin: any }) {
           placeholder="Password"
           label="Password"
           required
-          {...form.getInputProps("username")}
+          {...form.getInputProps("password")}
         />
         <Anchor
           mt="sm"

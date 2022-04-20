@@ -1,7 +1,10 @@
-import { Box, CSSObject, Grid, Image } from "@mantine/core";
+import { Box, Grid, Image, Paper, useMantineTheme, Text } from "@mantine/core";
 import ItemHeaderAnchor from "./ItemHeaderAnchor";
 import Matches from "../../cors/MediaQuery";
-import beauty from "../../public/images/beauty.png";
+import nivea from "../../public/images/nivea.png";
+import macbook from "../../public/images/macbook.png";
+import vr from "../../public/images/vr.png";
+import panda from "../../public/images/panda.png";
 
 export default function Categories() {
   type DataType = {
@@ -9,48 +12,56 @@ export default function Categories() {
     catagory: string;
   };
 
+  const theme = useMantineTheme();
+
   const matches = Matches().mdMatches;
   const CatagoryData: DataType[] = [
     {
-      image: beauty,
+      image: nivea,
       catagory: "Beauty picks",
     },
     {
-      image: "",
+      image: macbook,
       catagory: "Computer & Accessories",
     },
     {
-      image: "",
+      image: vr,
       catagory: "Video Games",
     },
     {
-      image: "",
+      image: panda,
       catagory: "Toys & Games",
     },
   ];
-  const gridStyle = (theme: any): CSSObject => ({
-    background: theme.colors.gray[2],
-    height: "300px",
-  });
+
   return (
-    <Box mt="lg">
+    <Box sx={{ display: matches ? "none" : "block" }}>
       <ItemHeaderAnchor
         text={matches ? "JoyBox Top Sellers" : "Shop by categories"}
       />
-      <Grid mt="lg" sx={{ display: matches ? "none" : "" }}>
+      <Grid mt="lg">
         {CatagoryData.map((item, i) => (
-          <Grid.Col key={i} span={matches ? 6 : 3}>
-            <Box sx={gridStyle}>
-              <Box>
-                <Image
-                  src={item.image}
-                  width={160}
-                  sx={{
+          <Grid.Col span={matches ? 6 : 3}>
+            <Box
+              sx={{
+                height: "350px",
+                backgroundColor: theme.colors.gray[1],
+                display: "flex",
+                overflow: "hidden",
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
+            >
+              <Box mt="lg" sx={{ width: "300px" }}>
+                <img
+                  style={{
+                    width: "100%",
                     marginLeft: "110px",
-                    overflow: "hidden",
                   }}
+                  src={item.image}
                 />
               </Box>
+              <Text ml="xl">{item.catagory}</Text>
             </Box>
           </Grid.Col>
         ))}
