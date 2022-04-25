@@ -30,7 +30,7 @@ export default function TodayDeals() {
     <Box mt="xs" sx={{ display: mdMatches ? "none" : "block" }}>
       <Grid>
         {DealsData.map((item, i) => (
-          <Grid.Col span={6}>
+          <Grid.Col span={6} key={i}>
             <Box
               sx={{
                 height: mdMatches ? "150px" : "180px",

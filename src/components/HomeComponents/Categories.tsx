@@ -35,13 +35,13 @@ export default function Categories() {
   ];
 
   return (
-    <Box sx={{ display: matches ? "none" : "block" }}>
+    <Box sx={{ display: matches ? "none" : "block" }} mt="lg">
       <ItemHeaderAnchor
         text={matches ? "JoyBox Top Sellers" : "Shop by categories"}
       />
-      <Grid mt="lg">
+      <Grid mt="xs">
         {CatagoryData.map((item, i) => (
-          <Grid.Col span={matches ? 6 : 3}>
+          <Grid.Col span={matches ? 6 : 3} key={i}>
             <Box
               sx={{
                 height: "350px",

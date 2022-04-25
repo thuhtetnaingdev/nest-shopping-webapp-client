@@ -15,9 +15,17 @@ import { useClickOutside } from "@mantine/hooks";
 import { useState } from "react";
 import { Search } from "tabler-icons-react";
 import AuthDrawer from "../AuthComponents/AuthDrawer";
-import Register from "../AuthComponents/Register";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import AvatarComponent from "./AvatarComponent";
+import { useDispatch } from "react-redux";
+import { openModel } from "../../features/auth/authModel";
 
 export default function Navbar() {
+  //Redux: User store
+  const { user } = useSelector((value: RootState) => value.userCredentials);
+  const dispatch = useDispatch();
+
   const theme = useMantineTheme();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -87,10 +95,16 @@ export default function Navbar() {
       </Grid.Col>
       <Grid.Col span={1}>
         <Center>
-          <Anchor variant="text" onClick={() => setOpenedModel(true)}>
-            Login
-          </Anchor>
-          <AuthDrawer openedModel={openedModel} setOpenedModel={setOpenedModel} />
+          {!user ? (
+            <>
+              <Anchor variant="text" onClick={() => dispatch(openModel())}>
+                Login
+              </Anchor>
+              <AuthDrawer />
+            </>
+          ) : (
+            <AvatarComponent user={user} />
+          )}
         </Center>
       </Grid.Col>
     </Grid>

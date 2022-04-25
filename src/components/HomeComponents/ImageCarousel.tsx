@@ -2,7 +2,6 @@ import { Box, Image } from "@mantine/core";
 import Iu from "../../public/images/iu.png";
 import Iu2 from "../../public/images/iu2.jpg";
 import Iu3 from "../../public/images/iu3.jpg";
-import "./imageCarousel.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
