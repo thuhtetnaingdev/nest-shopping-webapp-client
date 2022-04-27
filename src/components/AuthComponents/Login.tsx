@@ -12,13 +12,11 @@ import { User, Lock } from "tabler-icons-react";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../utilis/gqlRequests/authRequests";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginOrRegister } from "../../features/auth/authSlice";
-import { RootState } from "../../store";
 import { closeModel } from "../../features/auth/authModel";
 
 export default function Login(props: { isClickedLogin: any }) {
-  const user = useSelector((state: RootState) => state.userCredentials.user);
   const dispatch = useDispatch();
 
   const { form } = useForm({

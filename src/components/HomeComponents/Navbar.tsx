@@ -14,7 +14,7 @@ import {
 import { useClickOutside } from "@mantine/hooks";
 import { useState } from "react";
 import { Search } from "tabler-icons-react";
-import AuthDrawer from "../AuthComponents/AuthDrawer";
+import AuthDrawer from "../AuthComponents/UserProfileDrawer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import AvatarComponent from "./AvatarComponent";

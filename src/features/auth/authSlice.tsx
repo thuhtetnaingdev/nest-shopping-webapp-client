@@ -4,7 +4,8 @@ import jwtDecode from "jwt-decode";
 export interface UserState {
   id?: string;
   email?: string;
-  name?: string;
+  firstName: string;
+  lastName: string;
   username?: string;
   avatar?: string;
   role?: string;

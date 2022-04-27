@@ -8,12 +8,25 @@ import {
 import { logout } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { UserState } from "../../features/auth/authSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export default function AvatarComponent(props: { user: UserState }) {
+  const userDetails = useSelector((value: RootState) => value.userCredentials);
   const dispatch = useDispatch();
   return (
-    <Menu control={<Avatar src={null} radius="xl" />} size="sm">
-      <Menu.Label>{props.user.name}</Menu.Label>
+    <Menu
+      control={
+        <Avatar src={null} radius="xl" color="cyan">
+          {userDetails.user?.firstName[0]}
+          {userDetails.user?.lastName[0]}
+        </Avatar>
+      }
+      size="sm"
+    >
+      <Menu.Label>
+        {userDetails.user?.firstName + " " + userDetails.user?.lastName}
+      </Menu.Label>
       <Menu.Item
         icon={<UserCircle size={20} strokeWidth={1} color={"black"} />}
       >
