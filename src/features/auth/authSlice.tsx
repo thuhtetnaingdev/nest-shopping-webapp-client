@@ -31,11 +31,14 @@ export const userSlice = createSlice({
   name: "userCredentials",
   initialState,
   reducers: {
-    loginOrRegister: (state, action) => {
+    loginOrRegister: (
+      state: { user: any },
+      action: { payload: { token: string } }
+    ) => {
       localStorage.setItem("token", action.payload.token);
       state.user = jwtDecode(action.payload.token);
     },
-    logout: (state) => {
+    logout: (state: any) => {
       localStorage.removeItem("token");
       state.user = null;
     },

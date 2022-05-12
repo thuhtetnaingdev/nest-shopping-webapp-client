@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/HomeComponents/Navbar";
+import Navbar from "./components/NavComponents/Navbar";
 import {
   ColorScheme,
   ColorSchemeProvider,
@@ -10,6 +10,7 @@ import {
   Paper,
 } from "@mantine/core";
 import { useLocalStorageValue } from "@mantine/hooks";
+import SingleItem from "./pages/SingleItem";
 
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
@@ -32,6 +33,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/item" element={<SingleItem />} />
             </Routes>
           </Paper>
         </Container>

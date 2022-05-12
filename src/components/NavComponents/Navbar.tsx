@@ -17,7 +17,7 @@ import { Search } from "tabler-icons-react";
 import AuthDrawer from "../AuthComponents/UserProfileDrawer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import AvatarComponent from "./AvatarComponent";
+import AvatarComponent from "../HomeComponents/AvatarComponent";
 import { useDispatch } from "react-redux";
 import { openModel } from "../../features/auth/authModel";
 
@@ -29,8 +29,6 @@ export default function Navbar() {
   const theme = useMantineTheme();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const [openedModel, setOpenedModel] = useState<boolean>(false);
 
   const ref = useClickOutside(() => setIsOpen(false));
 
