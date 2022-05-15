@@ -1,5 +1,6 @@
-import { Box, Group, Space, Text } from "@mantine/core";
+import { Box, Button, Group, Space, Text } from "@mantine/core";
 import { BuildingStore, MapPin, Phone, Stars } from "tabler-icons-react";
+import { RiMessage2Line } from "react-icons/ri";
 
 export default function CompanyInfo() {
   return (
@@ -76,6 +77,16 @@ export default function CompanyInfo() {
           </Text>
         </Box>
       </Group>
+      <Button
+        leftIcon={<RiMessage2Line size="22" />}
+        variant="outline"
+        color="gray"
+        radius={0}
+        size="md"
+        mt="lg"
+      >
+        Connect to seller
+      </Button>
     </div>
   );
 }

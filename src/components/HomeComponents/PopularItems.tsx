@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import airdots from "../../public/images/airdots.png";
 import Matches from "../../cors/MediaQuery";
+import { Link } from "react-router-dom";
 
 export default function PopularItems() {
   const [items, setItems] = useState([{}, {}, {}, {}, {}, {}]);
@@ -56,7 +57,7 @@ export default function PopularItems() {
                   <Text size="xs" color="dimmed">
                     Ship to Myanmar
                   </Text>
-                  <Text weight={700}>
+                  <Text weight={700} component={Link} to={`/products/name`}>
                     Headphones wireless TWS Xiaomi Mi True
                   </Text>
                   <Group spacing="xs">

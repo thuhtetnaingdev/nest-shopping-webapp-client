@@ -12,10 +12,10 @@ const modelSlice = createSlice({
   name: "modelSlice",
   initialState,
   reducers: {
-    openModel(state) {
+    openModel(state: ModelState) {
       state.isModelOpen = true;
     },
-    closeModel(state) {
+    closeModel(state: ModelState) {
       state.isModelOpen = false;
     },
   },

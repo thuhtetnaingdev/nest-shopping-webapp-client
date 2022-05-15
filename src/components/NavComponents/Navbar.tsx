@@ -20,6 +20,7 @@ import { RootState } from "../../store";
 import AvatarComponent from "../HomeComponents/AvatarComponent";
 import { useDispatch } from "react-redux";
 import { openModel } from "../../features/auth/authModel";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   //Redux: User store
@@ -41,7 +42,7 @@ export default function Navbar() {
       <Grid.Col span={1}>
         <Center>
           <MantineProvider theme={{ fontFamily: "Sansita Swashed, cursive" }}>
-            <Anchor variant="text" size="xl">
+            <Anchor component={Link} to="/" variant="text" size="xl">
               JoyBox
             </Anchor>
           </MantineProvider>

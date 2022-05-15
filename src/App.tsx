@@ -33,7 +33,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/item" element={<SingleItem />} />
+              <Route path="/products/:item" element={<SingleItem />} />
             </Routes>
           </Paper>
         </Container>
