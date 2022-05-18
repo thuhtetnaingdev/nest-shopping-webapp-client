@@ -14,14 +14,14 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Provider store={store}>
-      <React.StrictMode>
+  <React.StrictMode>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </React.StrictMode>
-    </Provider>
-  </ApolloProvider>,
+      </Provider>
+    </ApolloProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );

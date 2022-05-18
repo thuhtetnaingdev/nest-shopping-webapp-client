@@ -10,6 +10,7 @@ import { useState } from "react";
 import airdots from "../../public/images/airdots.png";
 import Matches from "../../cors/MediaQuery";
 import { Link } from "react-router-dom";
+import RatingStar from "../RatingStarComponent/RatingStar";
 
 export default function PopularItems() {
   const [items, setItems] = useState([{}, {}, {}, {}, {}, {}]);
@@ -71,6 +72,7 @@ export default function PopularItems() {
                           border: "none",
                           outline: "none",
                           width: "1px",
+                          marginLeft: i === 0 ? "-2px" : "",
                           marginRight:
                             i === stars.length - 1
                               ? smMatches

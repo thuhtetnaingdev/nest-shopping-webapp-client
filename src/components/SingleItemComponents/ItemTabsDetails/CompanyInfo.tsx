@@ -1,14 +1,18 @@
-import { Box, Button, Group, Space, Text } from "@mantine/core";
+import { Box, Button, CSSObject, Group, Space, Text } from "@mantine/core";
 import { BuildingStore, MapPin, Phone, Stars } from "tabler-icons-react";
 import { RiMessage2Line } from "react-icons/ri";
 
 export default function CompanyInfo() {
+  const flexBoxSize: CSSObject = {
+    width: "45%",
+    height: "90px",
+  };
   return (
     <div>
       <Text weight={500}>Seller Overview</Text>
       <Space h="lg" />
       <Group position="apart">
-        <Box>
+        <Box sx={flexBoxSize}>
           <Group>
             <BuildingStore
               size={22}
@@ -25,7 +29,7 @@ export default function CompanyInfo() {
             Joy Box Myanmar
           </Text>
         </Box>
-        <Box>
+        <Box sx={flexBoxSize}>
           <Group>
             <Phone
               size={22}
@@ -42,7 +46,7 @@ export default function CompanyInfo() {
             09-123456789
           </Text>
         </Box>
-        <Box>
+        <Box sx={flexBoxSize}>
           <Group>
             <MapPin
               size={22}
@@ -59,7 +63,7 @@ export default function CompanyInfo() {
             Yangon, South Okkalapa
           </Text>
         </Box>
-        <Box>
+        <Box sx={flexBoxSize}>
           <Group>
             <Stars
               size={22}

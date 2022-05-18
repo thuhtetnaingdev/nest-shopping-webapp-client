@@ -1,9 +1,9 @@
-import { Text, MantineTheme, Group, Menu, Box } from "@mantine/core";
+import { Box, Group, Text, Menu, MantineTheme } from "@mantine/core";
 import { useState } from "react";
 import { ArrowsUpDown } from "tabler-icons-react";
-import Reviews from "./ProductReviewsComponents";
+import BuyerReviews from "./BuyerReviews";
 
-export default function ProductReviewes() {
+export default function Reviews() {
   const [menuType, setMenuType] = useState<string>("Relevance");
   const menuItems = [
     "Relevance",
@@ -11,9 +11,8 @@ export default function ProductReviewes() {
     "Rating: High to Low",
     "Rating: Low to High",
   ];
-
   return (
-    <Box>
+    <Box mt="lg">
       <Group
         position="apart"
         mt="lg"
@@ -41,7 +40,7 @@ export default function ProductReviewes() {
           </Menu>
         </Group>
       </Group>
-      <Reviews />
+      <BuyerReviews />
     </Box>
   );
 }

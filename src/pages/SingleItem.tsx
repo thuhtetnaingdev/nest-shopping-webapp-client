@@ -1,14 +1,13 @@
-import Item from "../components/SingleItemComponents/TopItemComponent";
+import Item from "../components/SingleItemComponents/TopItemComponents";
 import PolicyAndLocation from "../components/SingleItemComponents/PolicyAndLocation";
 import ItemTabs from "../components/SingleItemComponents/ItemTabs";
 import { Box, MantineProvider } from "@mantine/core";
 import Ratings from "../components/SingleItemComponents/Ratings";
-import ProductReviewes from "../components/SingleItemComponents/ProductReviews";
 import { useParams } from "react-router-dom";
+import Reviews from "../components/SingleItemComponents/ProductReviews";
 
 export default function SingleItem() {
-  const { item } = useParams();
-  console.log(item);
+  // const { item } = useParams(); //TODO:
   return (
     <Box mb="lg">
       <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
@@ -16,7 +15,7 @@ export default function SingleItem() {
         <PolicyAndLocation />
         <ItemTabs />
         <Ratings />
-        <ProductReviewes />
+        <Reviews />
       </MantineProvider>
     </Box>
   );

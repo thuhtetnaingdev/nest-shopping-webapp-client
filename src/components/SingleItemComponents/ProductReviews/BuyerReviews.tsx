@@ -4,7 +4,7 @@ import { FaThumbsUp, FaRegThumbsUp } from "react-icons/fa"; //TODO:
 
 export default function BuyerReviews() {
   return (
-    <Box>
+    <Box mt="md">
       <Group position="apart">
         <Box sx={{ marginLeft: "5px" }}>
           <RatingStar marginRight="1px" fontSize="1.5rem" />

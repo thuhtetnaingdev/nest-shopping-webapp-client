@@ -15,12 +15,6 @@ export default function ItemTabs() {
             eveniet maxime, est obcaecati quia, perspiciatis nam ut temporibus
             dolorum corrupti similique tempore neque odio ea saepe velit quasi?
             Dignissimos est quo explicabo iste, veritatis consectetur
-            exercitationem necessitatibus aliquam hic deleniti aperiam
-            cupiditate rerum maxime, quaerat accusantium eum dolorum assumenda
-            commodi et harum eaque quidem dicta possimus soluta. Adipisci, aut
-            nisi. Adipisci architecto repudiandae nihil officia voluptas
-            possimus libero asperiores ex. Adipisci, quaerat quasi, voluptatum
-            quibusdam et necessitatibus hic dolores
           </Skeleton>
         </Tabs.Tab>
         <Tabs.Tab label="Company Info" sx={{ fontSize: "1rem" }}>

@@ -1,7 +1,7 @@
-import { Box, Group, MantineTheme, Progress, Stack, Text } from "@mantine/core";
+import { Box, Group, Progress, Stack, Text } from "@mantine/core";
 import RatingStar from "../RatingStarComponent/RatingStar";
 
-const stars = [{}, {}, {}, {}, {}];
+const stars = [1, 2, 3, 4, 5];
 export default function Ratings() {
   return (
     <>
@@ -35,7 +35,7 @@ function RatingProgress() {
       justify="flex-start"
     >
       {stars.map((_, i) => (
-        <Group sx={{ marginBottom: "-18px" }}>
+        <Group key={i} sx={{ marginBottom: "-18px" }}>
           <RatingStar marginRight="1px" fontSize="1.5rem" stars={5 - i} />
           <Box sx={{ width: "50%" }} ml="md">
             <Progress size="md" value={90} />
