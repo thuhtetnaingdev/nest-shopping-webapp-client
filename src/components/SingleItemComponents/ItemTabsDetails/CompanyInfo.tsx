@@ -72,7 +72,7 @@ export default function CompanyInfo() {
               style={{ marginRight: "-9px", marginBottom: "5px" }}
             />
             <Text color="dimmed" size="sm">
-              Ratings
+              Seller's Ratings
             </Text>
           </Group>
           <Space h="xs" />

@@ -55,7 +55,7 @@ export default function PolicyComponentForMobile({
                 {", "}
                 {monthNames[nowDate.getMonth()]} {nowDate.getDate()}
               </Text>
-              <span>-</span>
+              <Box mx={7}>-</Box>
               <Text size="sm">
                 {newDate.getDay}
                 {", "}

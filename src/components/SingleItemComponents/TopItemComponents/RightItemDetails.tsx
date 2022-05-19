@@ -6,13 +6,17 @@ import {
   Button,
   useMantineTheme,
 } from "@mantine/core";
+import { useOs } from "@mantine/hooks";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsCashCoin } from "react-icons/bs";
 import Matches from "../../../cors/MediaQuery";
+import RatingStar from "../../RatingStarComponent/RatingStar";
 
 function RightItemDetails() {
   const theme = useMantineTheme();
   const stars = [{}, {}, {}, {}, {}];
+
+  const os = useOs();
 
   const match = Matches();
   return (
@@ -48,23 +52,10 @@ function RightItemDetails() {
           voluptatem cumque quos.
         </Text>
         <Group>
-          {stars.map((_, i) => (
-            <Box
-              key={i}
-              sx={{
-                backgroundColor: "transparent",
-                color: theme.colors.teal[4],
-                fontSize: "2.5rem",
-                border: "none",
-                outline: "none",
-                width: "1px",
-                marginRight: "14px",
-                marginLeft: i === 0 ? "-10px" : "",
-              }}
-            >
-              &#9733;
-            </Box>
-          ))}
+          <RatingStar
+            fontSize="2.5rem"
+            marginRight={os === "ios" ? "18px" : "14px"}
+          />
         </Group>
         <MantineProvider
           theme={{

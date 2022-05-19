@@ -1,8 +1,10 @@
-import { Divider, Skeleton, Tabs } from "@mantine/core";
-import CompanyInfo from "./ItemTabsDetails/CompanyInfo";
+import { Divider, Skeleton, Tabs, Text } from "@mantine/core";
+import { useOs } from "@mantine/hooks";
+import Matches from "../../../cors/MediaQuery";
+import CompanyInfo from "./CompanyInfo";
 
 export default function ItemTabs() {
-  const skeleton = [1, 2, 3, 4, 5, 6, 7];
+  const match = Matches()
   return (
     <>
       <Tabs variant="outline" tabPadding="xl" mt="xl">
@@ -21,7 +23,7 @@ export default function ItemTabs() {
           <CompanyInfo />
         </Tabs.Tab>
       </Tabs>
-      <Divider mt="lg" />
+      {!match.smMatches && <Divider mt="lg" />}
     </>
   );
 }

@@ -25,10 +25,12 @@ export default function Reviews() {
         <Group>
           <Menu
             control={
-              <Group spacing="xs">
+              <Group spacing={5}>
                 <ArrowsUpDown size={25} strokeWidth={1} color={"black"} />
-                <Text>Sort:</Text>
-                <Text color="gray">{menuType}</Text>
+                <Text size="sm">Sort:</Text>
+                <Text size="sm" color="gray">
+                  {menuType}
+                </Text>
               </Group>
             }
           >
