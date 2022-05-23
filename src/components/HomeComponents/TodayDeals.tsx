@@ -9,6 +9,7 @@ import {
 import Matches from "../../cors/MediaQuery";
 import xbox from "../../public/images/xbox.png";
 import clock from "../../public/images/clock.png";
+import { Link } from "react-router-dom";
 
 export default function TodayDeals() {
   const DealsData = [
@@ -48,22 +49,13 @@ export default function TodayDeals() {
                   </MantineProvider>
                   <Text>{item.body}</Text>
                   <Box sx={{ marginTop: "1.5rem" }}>
-                    <Anchor
-                      variant="text"
-                      color="gray"
-                      sx={{
-                        "&:hover": {
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                        },
-                      }}
-                    >
+                    <Anchor color="gray" component={Link} to="/deals">
                       See more &#10141;
                     </Anchor>
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ width: "30%" }}>
+              <Box sx={{ width: "27%" }}>
                 <img
                   style={{
                     width: "100%",

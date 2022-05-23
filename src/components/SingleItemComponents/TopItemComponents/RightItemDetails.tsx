@@ -14,8 +14,6 @@ import RatingStar from "../../RatingStarComponent/RatingStar";
 
 function RightItemDetails() {
   const theme = useMantineTheme();
-  const stars = [{}, {}, {}, {}, {}];
-
   const os = useOs();
 
   const match = Matches();
@@ -39,13 +37,7 @@ function RightItemDetails() {
             Kyara Upholstered Standard Bed by Zipcode Design
           </Text>
         </MantineProvider>
-        <Text
-          mt="sm"
-          color={theme.colors.dark[3]}
-          sx={{
-            textAlign: "justify",
-          }}
-        >
+        <Text mt="sm" color={theme.colors.dark[3]}>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias,
           fugiat. Quasi blanditiis dolore recusandae voluptatem ut quibusdam
           adipisci, quaerat ea omnis culpa ducimus fugit, dolorem ab. Quam
@@ -54,7 +46,7 @@ function RightItemDetails() {
         <Group>
           <RatingStar
             fontSize="2.5rem"
-            marginRight={os === "ios" ? "18px" : "14px"}
+            marginRight={os === "ios" ? "22px" : "14px"}
           />
         </Group>
         <MantineProvider

@@ -45,62 +45,64 @@ export default function PopularItems() {
                   paddingBottom: "17px",
                 }}
               >
-                <Box
-                  sx={{
-                    width: "150px",
-                    height: ipadAir ? "170px" : "150px",
-                    margin: "30px auto 0",
-                  }}
-                >
-                  <img style={{ width: "100%" }} src={airdots} />
-                </Box>
-                <Box ml="xl">
-                  <Text size="xs" color="dimmed">
-                    Ship to Myanmar
-                  </Text>
-                  <Text weight={700} component={Link} to={`/products/name`}>
-                    Headphones wireless TWS Xiaomi Mi True
-                  </Text>
-                  <Group spacing="xs">
-                    {stars.map((_, i) => (
-                      <Box
-                        key={i}
-                        sx={{
-                          backgroundColor: "transparent",
-                          color: theme.colors.yellow[7],
-                          fontSize: "1rem",
-                          border: "none",
-                          outline: "none",
-                          width: "1px",
-                          marginLeft: i === 0 ? "-2px" : "",
-                          marginRight:
-                            i === stars.length - 1
-                              ? smMatches
-                                ? "4rem"
-                                : "1rem"
-                              : "",
-                        }}
-                      >
-                        &#9733;
-                      </Box>
-                    ))}
+                <Box>
+                  <Box
+                    sx={{
+                      width: "150px",
+                      height: ipadAir ? "170px" : "150px",
+                      margin: "30px auto 0",
+                    }}
+                  >
+                    <img style={{ width: "100%" }} src={airdots} />
+                  </Box>
+                  <Box mx="lg">
                     <Text size="xs" color="dimmed">
-                      10000 reviewes
+                      Ship to Myanmar
                     </Text>
-                  </Group>
-                  <Group>
-                    <Text size="lg" weight={700} mt="sm">
-                      $79.99
-                      <Text
-                        sx={{ display: "inline" }}
-                        ml="md"
-                        size="xs"
-                        color="dimmed"
-                      >
-                        <s>$100.99</s>
+                    <Text weight={700} component={Link} to={`/products/name`}>
+                      Headphones wireless TWS Xiaomi Mi True
+                    </Text>
+                    <Group spacing="xs">
+                      {stars.map((_, i) => (
+                        <Box
+                          key={i}
+                          sx={{
+                            backgroundColor: "transparent",
+                            color: theme.colors.yellow[7],
+                            fontSize: "1rem",
+                            border: "none",
+                            outline: "none",
+                            width: "1px",
+                            marginLeft: i === 0 ? "-2px" : "",
+                            marginRight:
+                              i === stars.length - 1
+                                ? smMatches
+                                  ? "4rem"
+                                  : "1rem"
+                                : "",
+                          }}
+                        >
+                          &#9733;
+                        </Box>
+                      ))}
+                      <Text size="xs" color="dimmed">
+                        10000 reviewes
                       </Text>
-                    </Text>
-                  </Group>
+                    </Group>
+                    <Group>
+                      <Text size="lg" weight={700} mt="sm">
+                        $79.99
+                        <Text
+                          sx={{ display: "inline" }}
+                          ml="md"
+                          size="xs"
+                          color="dimmed"
+                        >
+                          <s>$100.99</s>
+                        </Text>
+                      </Text>
+                    </Group>
+                  </Box>
                 </Box>
               </Box>
             </Grid.Col>

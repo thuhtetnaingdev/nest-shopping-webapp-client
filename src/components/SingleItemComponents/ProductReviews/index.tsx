@@ -1,7 +1,8 @@
 import { Box, Group, Text, Menu, MantineTheme } from "@mantine/core";
 import { useState } from "react";
 import { ArrowsUpDown } from "tabler-icons-react";
-import BuyerReviews from "./BuyerReviews";
+import BuyerReviews from "./BuyerReview";
+import SellerReply from "./SellerReply";
 
 export default function Reviews() {
   const [menuType, setMenuType] = useState<string>("Relevance");
@@ -43,6 +44,7 @@ export default function Reviews() {
         </Group>
       </Group>
       <BuyerReviews />
+      <SellerReply />
     </Box>
   );
 }

@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Search } from "tabler-icons-react";
 import AuthDrawer from "../AuthComponents/UserProfileDrawer";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState, AppDispatch } from "../../store";
 import AvatarComponent from "../HomeComponents/AvatarComponent";
 import { useDispatch } from "react-redux";
 import { openModel } from "../../features/auth/authModel";
