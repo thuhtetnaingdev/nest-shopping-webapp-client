@@ -15,6 +15,12 @@ import SingleItem from "./pages/SingleItem";
 import Deals from "./pages/Deals";
 import { useEffect, useState } from "react";
 
+try {
+  console.log("hello world");
+} catch (e) {
+  console.log(e);
+}
+
 function App() {
   const [bgColor, setBgColor] = useState("white");
   const location = useLocation();

@@ -1,4 +1,5 @@
 import { Box, Text, Grid, Group, Anchor, Image } from "@mantine/core";
+import { Link } from "react-router-dom";
 import Matches from "../../cors/MediaQuery";
 import bed from "../../public/images/bed.jpg";
 
@@ -11,7 +12,7 @@ export default function ItemsList() {
         <Grid.Col span={smMatches ? 12 : mdMatches ? 6 : 4} key={i}>
           <Box
             sx={(theme) => ({
-              height: smMatches ? "150px" : "180px",
+              height: "150px",
               border: `1px solid ${theme.colors.gray[4]}`,
               display: "flex",
               flexWrap: "wrap",
@@ -24,7 +25,7 @@ export default function ItemsList() {
               <Group sx={{ maxWidth: "100%", flexWrap: "nowrap" }} spacing={10}>
                 <Image src={bed} width={130} />
                 <Box sx={{ width: "50%" }}>
-                  <Anchor color="dark">
+                  <Anchor component={Link} to="/products/name" color="dark">
                     Intelligent Design Clara Comforter Set
                   </Anchor>
                   <Text size="xl" weight={700}>

@@ -6,7 +6,6 @@ import Ratings from "../components/SingleItemComponents/Ratings";
 import { useParams } from "react-router-dom";
 import Reviews from "../components/SingleItemComponents/ProductReviews";
 import Matches from "../cors/MediaQuery";
-
 export default function SingleItem() {
   // const { item } = useParams(); //TODO:
   const match = Matches();

@@ -4,7 +4,9 @@ import {
   useMantineTheme,
   Text,
   Anchor,
-  MantineProvider,
+  Image,
+  Group,
+  Stack,
 } from "@mantine/core";
 import Matches from "../../cors/MediaQuery";
 import xbox from "../../public/images/xbox.png";
@@ -26,49 +28,46 @@ export default function TodayDeals() {
   ];
 
   const theme = useMantineTheme();
-  const mdMatches = Matches().mdMatches;
+  const { mdMatches, smMatches } = Matches();
   return (
-    <Box mt="xs" sx={{ display: mdMatches ? "none" : "block" }}>
-      <Grid>
-        {DealsData.map((item, i) => (
-          <Grid.Col span={6} key={i}>
-            <Box
+    <Grid>
+      {DealsData.map((item, i) => (
+        <Grid.Col key={i} span={smMatches ? 12 : 6}>
+          <Box
+            sx={(theme) => ({
+              height: "180px",
+              backgroundColor: theme.colors.orange[0],
+              display: "flex",
+              justifyContent: "center",
+            })}
+          >
+            <Group
               sx={{
-                height: mdMatches ? "150px" : "180px",
-                backgroundColor: theme.colors.orange[0],
-                display: "flex",
-                overflow: "hidden",
+                position: "relative",
+                width: "95%",
+                height: "100%",
+                flexWrap: "nowrap",
               }}
             >
-              <Box sx={{ width: "60%" }}>
-                <Box sx={{ marginLeft: "2rem" }} mt="lg">
-                  <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
-                    <Text size="lg" weight={600}>
-                      {item.header}
-                    </Text>
-                  </MantineProvider>
-                  <Text>{item.body}</Text>
-                  <Box sx={{ marginTop: "1.5rem" }}>
-                    <Anchor color="gray" component={Link} to="/deals">
-                      See more &#10141;
-                    </Anchor>
-                  </Box>
-                </Box>
-              </Box>
-              <Box sx={{ width: "27%" }}>
-                <img
-                  style={{
-                    width: "100%",
-                    marginLeft: "90px",
-                    marginTop: "0.7rem",
-                  }}
-                  src={item.image}
-                />
-              </Box>
-            </Box>
-          </Grid.Col>
-        ))}
-      </Grid>
-    </Box>
+              <Stack spacing={0}>
+                <Text weight={500} size="lg">
+                  {item.header}
+                </Text>
+                <Text color={"gray"}>{item.body}</Text>
+                <Anchor
+                  component={Link}
+                  to="/deals"
+                  mt={smMatches ? 0 : "md"}
+                  color="gray"
+                >
+                  see more &#8594;
+                </Anchor>
+              </Stack>
+              <Image width={140} src={item.image} />
+            </Group>
+          </Box>
+        </Grid.Col>
+      ))}
+    </Grid>
   );
 }
