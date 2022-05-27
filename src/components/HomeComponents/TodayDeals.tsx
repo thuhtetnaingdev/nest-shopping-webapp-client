@@ -44,7 +44,7 @@ export default function TodayDeals() {
             <Group
               sx={{
                 position: "relative",
-                width: "95%",
+                width: "92%",
                 height: "100%",
                 flexWrap: "nowrap",
               }}

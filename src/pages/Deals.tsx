@@ -23,13 +23,13 @@ export default function Deals() {
   useEffect(() => {
     activePage !== 1
       ? setSearchParams({ page: activePage.toString() })
-      : navigate(`${products}`);
+      : navigate(`${products ? products : ""}`);
   }, [activePage]);
 
   return (
     <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
       <Stack align="center" mb="lg">
-        {/**more tabs need to add TODO: */}
+        {/**need to add more tabs TODO: */}
         <Tabs active={activeTab} position="right" onTabChange={onChange}>
           <Tabs.Tab label="Featured" tabKey="featured">
             <ItemsList />
