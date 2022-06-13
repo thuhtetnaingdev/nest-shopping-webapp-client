@@ -1,4 +1,5 @@
 import { Grid } from "@mantine/core";
+import { useSelector } from "react-redux";
 import Matches from "../../../cors/MediaQuery";
 import sofa1 from "../../../public/images/sofa1.webp";
 import sofa2 from "../../../public/images/sofa2.webp";

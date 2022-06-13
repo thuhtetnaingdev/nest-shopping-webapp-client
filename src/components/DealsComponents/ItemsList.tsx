@@ -1,14 +1,28 @@
-import { Box, Text, Grid, Group, Anchor, Image } from "@mantine/core";
+import {
+  Box,
+  Text,
+  Grid,
+  Group,
+  Anchor,
+  Image,
+  LoadingOverlay,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import Matches from "../../cors/MediaQuery";
-import bed from "../../public/images/bed.jpg";
+import { RootObject } from "../../cors/types/ItemTypes";
 
-export default function ItemsList() {
-  const itemDemoArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+export default function ItemsList({
+  data,
+  loading,
+}: {
+  data: RootObject[];
+  loading: boolean;
+}) {
   const { mdMatches, smMatches } = Matches();
   return (
-    <Grid gutter="xs">
-      {itemDemoArray.map((_, i) => (
+    <Grid gutter="xs" sx={{ minHeight: "50vh", width: "100%" }}>
+      <LoadingOverlay visible={loading} />
+      {data.map((item, i) => (
         <Grid.Col span={smMatches ? 12 : mdMatches ? 6 : 4} key={i}>
           <Box
             sx={(theme) => ({
@@ -23,13 +37,18 @@ export default function ItemsList() {
           >
             <Box sx={{ width: "95%" }}>
               <Group sx={{ maxWidth: "100%", flexWrap: "nowrap" }} spacing={10}>
-                <Image src={bed} width={130} />
-                <Box sx={{ width: "50%" }}>
-                  <Anchor component={Link} to="/products/name" color="dark">
-                    Intelligent Design Clara Comforter Set
+                <Image src={item.image} width={70} />
+                <Box sx={{ width: "50%" }} ml="sm">
+                  <Anchor
+                    component={Link}
+                    lineClamp={2}
+                    to={`/products/${item.id}`}
+                    color="dark"
+                  >
+                    {item.title}
                   </Anchor>
                   <Text size="xl" weight={700}>
-                    $18.04
+                    {item.price}
                   </Text>
                   <Group>
                     <Text color="gray" size="sm">

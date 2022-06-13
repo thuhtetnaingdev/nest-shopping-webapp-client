@@ -5,6 +5,7 @@ import {
   Text,
   MantineProvider,
   Group,
+  Stack,
 } from "@mantine/core";
 import { useState } from "react";
 import airdots from "../../public/images/airdots.png";
@@ -38,11 +39,11 @@ export default function PopularItems() {
               sx={{ minWidth: 0 }}
             >
               <Box
+                py={20}
                 sx={{
                   backgroundColor: theme.colors.gray[2],
                   display: "flex",
                   flexWrap: "wrap",
-                  paddingBottom: "17px",
                 }}
               >
                 <Box>
@@ -50,41 +51,27 @@ export default function PopularItems() {
                     sx={{
                       width: "150px",
                       height: ipadAir ? "170px" : "150px",
-                      margin: "30px auto 0",
+                      marginLeft: "auto",
+                      marginRight: "auto",
                     }}
                   >
                     <img style={{ width: "100%" }} src={airdots} />
                   </Box>
-                  <Box mx="lg">
+                  <Stack mx="lg" spacing={0}>
                     <Text size="xs" color="dimmed">
                       Ship to Myanmar
                     </Text>
-                    <Text weight={700} component={Link} to={`/products/name`}>
+                    <Text
+                      weight={700}
+                      component={Link}
+                      to={`/products/${i + 1}`}
+                    >
                       Headphones wireless TWS Xiaomi Mi True
                     </Text>
-                    <Group spacing="xs">
-                      {stars.map((_, i) => (
-                        <Box
-                          key={i}
-                          sx={{
-                            backgroundColor: "transparent",
-                            color: theme.colors.yellow[7],
-                            fontSize: "1rem",
-                            border: "none",
-                            outline: "none",
-                            width: "1px",
-                            marginLeft: i === 0 ? "-2px" : "",
-                            marginRight:
-                              i === stars.length - 1
-                                ? smMatches
-                                  ? "4rem"
-                                  : "1rem"
-                                : "",
-                          }}
-                        >
-                          &#9733;
-                        </Box>
-                      ))}
+                    <Group spacing="xl">
+                      <Box ml={5}>
+                        <RatingStar fontSize="1.3rem" marginRight="0px" />
+                      </Box>
                       <Text size="xs" color="dimmed">
                         10000 reviewes
                       </Text>
@@ -102,7 +89,7 @@ export default function PopularItems() {
                         </Text>
                       </Text>
                     </Group>
-                  </Box>
+                  </Stack>
                 </Box>
               </Box>
             </Grid.Col>

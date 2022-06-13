@@ -14,6 +14,7 @@ import { useLocalStorageValue } from "@mantine/hooks";
 import SingleItem from "./pages/SingleItem";
 import Deals from "./pages/Deals";
 import { useEffect, useState } from "react";
+import { UserPage } from "./pages/UserPage";
 
 try {
   console.log("hello world");
@@ -71,6 +72,7 @@ function App() {
               <Route path="deals" element={<Deals />}>
                 <Route path=":products" element={<Outlet />} />
               </Route>
+              <Route path="/user" element={<UserPage />} />
             </Routes>
           </Container>
         </Paper>
