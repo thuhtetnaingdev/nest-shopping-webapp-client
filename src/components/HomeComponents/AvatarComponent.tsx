@@ -10,10 +10,12 @@ import { useDispatch } from "react-redux";
 import { UserState } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AvatarComponent(props: { user: UserState }) {
   const userDetails = useSelector((value: RootState) => value.userCredentials);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <Menu
       control={
@@ -29,6 +31,7 @@ export default function AvatarComponent(props: { user: UserState }) {
       </Menu.Label>
       <Menu.Item
         icon={<UserCircle size={20} strokeWidth={1} color={"black"} />}
+        onClick={() => navigate("/user")}
       >
         Profile
       </Menu.Item>

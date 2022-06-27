@@ -9,6 +9,7 @@ import Iu3 from "../public/images/iu3.jpg";
 
 export default function Home() {
   const images = [Iu, Iu2, Iu3];
+
   return (
     <>
       <ImageCarousel autoplay={true} images={images} />

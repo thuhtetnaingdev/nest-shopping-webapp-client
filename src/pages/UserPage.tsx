@@ -1,13 +1,12 @@
-import { useMantineTheme } from "@mantine/core";
-import UserTabs from "../components/UserPanelComponents/UserTabsComponents/UserTabs";
+import { Box } from "@mantine/core";
+import UserBodyComponent from "../components/UserPanelComponents/UserBodyComponent";
 import { UserTopComponent } from "../components/UserPanelComponents/UserTopComponent";
 
 export const UserPage = () => {
-  const theme = useMantineTheme();
   return (
-    <>
+    <Box mt="lg">
       <UserTopComponent />
-      <UserTabs />
-    </>
+      <UserBodyComponent />
+    </Box>
   );
 };

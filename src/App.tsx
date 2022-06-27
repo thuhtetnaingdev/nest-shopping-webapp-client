@@ -16,20 +16,19 @@ import Deals from "./pages/Deals";
 import { useEffect, useState } from "react";
 import { UserPage } from "./pages/UserPage";
 
-try {
-  console.log("hello world");
-} catch (e) {
-  console.log(e);
-}
-
 function App() {
   const [bgColor, setBgColor] = useState("white");
   const location = useLocation();
 
   useEffect(() => {
-    location.pathname.startsWith("/deals")
-      ? setBgColor("#F6F6F6")
+    location.pathname.startsWith("/products")
+      ? setBgColor("white")
+      : location.pathname !== "/"
+      ? setBgColor("#E9ECEF")
       : setBgColor("white");
+    return () => {
+      setBgColor("E9ECEF");
+    };
   }, [location.pathname]);
 
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
@@ -64,8 +63,8 @@ function App() {
           })}
           p={5}
         >
+          <Navbar />
           <Container size="xl" mt="sm" mx="auto">
-            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products/:item" element={<SingleItem />} />

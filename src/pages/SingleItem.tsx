@@ -6,21 +6,24 @@ import Ratings from "../components/SingleItemComponents/Ratings";
 import { useParams } from "react-router-dom";
 import Reviews from "../components/SingleItemComponents/ProductReviews";
 import Matches from "../cors/MediaQuery";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cleanStore, setItem } from "../features/singleItemSlice";
+import { RootState } from "../store";
 
 export default function SingleItem() {
+  const { item } = useSelector((value: RootState) => value.singleItemStore);
+
   const dispatch = useDispatch();
 
-  const { item } = useParams(); //TODO:
+  const { item: products } = useParams(); //TODO:
   const match = Matches();
 
   const fetchData = async () => {
     try {
       const { data } = await axios.get(
-        `https://fakestoreapi.com/products/${item}`
+        `https://fakestoreapi.com/products/${products}`
       );
       return data;
     } catch (error) {
@@ -39,10 +42,14 @@ export default function SingleItem() {
     <Box mb="lg">
       <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
         <Item />
-        <PolicyAndLocation />
-        <ItemTabs />
-        {!match.smMatches && <Ratings />}
-        <Reviews />
+        {item && (
+          <>
+            <PolicyAndLocation />
+            <ItemTabs />
+            {!match.smMatches && <Ratings />}
+            <Reviews />
+          </>
+        )}
       </MantineProvider>
     </Box>
   );

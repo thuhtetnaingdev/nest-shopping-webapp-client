@@ -1,9 +1,13 @@
-import { Box, Grid, Image } from "@mantine/core";
+import { Box, Grid, Group, Image, Skeleton } from "@mantine/core";
 import { useState } from "react";
 import ImageCarousel from "../../CarouselComponent/ImageCarousel";
 import Matches from "../../../cors/MediaQuery";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { ImageSkeleton } from "./PageSkeletonComponents/SinglePageSkeletons";
 
 const LeftItemImage = ({ sofas }: { sofas: Array<string> }) => {
+  const { item } = useSelector((value: RootState) => value.singleItemStore);
   const [mainImage, setMainImage] = useState<number>(0);
 
   const match = Matches();
@@ -17,15 +21,21 @@ const LeftItemImage = ({ sofas }: { sofas: Array<string> }) => {
         width: "100%",
       }}
     >
-      <ImageCarousel
-        autoplay={false}
-        images={sofas}
-        dots={match.mdMatches}
-        scrollIndex={mainImage}
-        showCurrentPosition={!match.mdMatches}
-      />
-      {!match.mdMatches && (
-        <MultipleImages items={sofas} carouselHandler={carouselHandler} />
+      {item ? (
+        <>
+          <ImageCarousel
+            autoplay={false}
+            images={sofas}
+            dots={match.mdMatches}
+            scrollIndex={mainImage}
+            showCurrentPosition={!match.mdMatches}
+          />
+          {!match.mdMatches && (
+            <MultipleImages items={sofas} carouselHandler={carouselHandler} />
+          )}
+        </>
+      ) : (
+        <ImageSkeleton />
       )}
     </Box>
   );

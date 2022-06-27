@@ -12,17 +12,21 @@ import {
 import { MdLocationPin } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import Matches from "../../cors/MediaQuery";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/auth/authSlice";
 
 export const UserTopComponent = () => {
   const { smMatches } = Matches();
+
+  const dispatch = useDispatch();
 
   return (
     <Box>
       <Group
         sx={(theme: MantineTheme) => ({
           height: "250px",
-          backgroundColor: theme.colors.gray[1],
           paddingBottom: "30px",
+          background: "white",
         })}
         position="apart"
         align="flex-end"
@@ -42,7 +46,12 @@ export const UserTopComponent = () => {
           </Group>
         </Stack>
         {!smMatches && (
-          <Button variant="outline" color="gray" mr={30}>
+          <Button
+            variant="outline"
+            color="gray"
+            mr={30}
+            onClick={() => dispatch(logout())}
+          >
             Sign Out
           </Button>
         )}

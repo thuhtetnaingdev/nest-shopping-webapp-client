@@ -7,6 +7,7 @@ import {
   Group,
   Input,
   MantineProvider,
+  MantineTheme,
   MediaQuery,
   Text,
   useMantineTheme,
@@ -20,7 +21,7 @@ import { RootState, AppDispatch } from "../../store";
 import AvatarComponent from "../HomeComponents/AvatarComponent";
 import { useDispatch } from "react-redux";
 import { openModel } from "../../features/auth/authModel";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   //Redux: User store
@@ -37,8 +38,28 @@ export default function Navbar() {
     display: "none",
   };
 
+  const location = useLocation();
+
+  console.log(location);
+
   return (
-    <Grid grow align="center" pb="md">
+    <Grid
+      grow
+      align="center"
+      py={8}
+      sx={(theme: MantineTheme) => ({
+        backgroundColor: location.pathname.startsWith("/products")
+          ? ""
+          : location.pathname === "/"
+          ? ""
+          : theme.colors.indigo[5],
+        color: location.pathname.startsWith("/products")
+          ? "black"
+          : location.pathname === "/"
+          ? "black"
+          : "white",
+      })}
+    >
       <Grid.Col span={1}>
         <Center>
           <MantineProvider theme={{ fontFamily: "Sansita Swashed, cursive" }}>
