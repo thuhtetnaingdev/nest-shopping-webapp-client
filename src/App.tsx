@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./pages/Home";
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
-import Navbar from "./components/NavComponents/Navbar";
+import Navbar from "./components/NavComponents";
 import {
   ColorScheme,
   ColorSchemeProvider,
@@ -71,7 +71,7 @@ function App() {
               <Route path="deals" element={<Deals />}>
                 <Route path=":products" element={<Outlet />} />
               </Route>
-              <Route path="/user" element={<UserPage />} />
+              <Route path="/profile" element={<UserPage />} />
             </Routes>
           </Container>
         </Paper>

@@ -7,12 +7,14 @@ import {
 } from "tabler-icons-react";
 import { logout } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
-import { UserState } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../ModalComponent/ConfirmationModal";
+import { useState } from "react";
 
-export default function AvatarComponent(props: { user: UserState }) {
+export default function AvatarComponent() {
+  const [isOpened, setIsOpened] = useState(false);
   const userDetails = useSelector((value: RootState) => value.userCredentials);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,17 +33,19 @@ export default function AvatarComponent(props: { user: UserState }) {
       </Menu.Label>
       <Menu.Item
         icon={<UserCircle size={20} strokeWidth={1} color={"black"} />}
-        onClick={() => navigate("/user")}
+        onClick={() => navigate("/profile")}
       >
         Profile
       </Menu.Item>
       <Menu.Item
         icon={<ShoppingCart size={20} strokeWidth={1} color={"black"} />}
+        onClick={() => navigate("/user/cart")}
       >
         Cart
       </Menu.Item>
       <Menu.Item
         icon={<TruckDelivery size={20} strokeWidth={1} color={"black"} />}
+        onClick={() => navigate("/user/orders")}
       >
         Orders
       </Menu.Item>

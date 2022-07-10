@@ -7,15 +7,17 @@ import {
   Text,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
+import Matches from "../../../cors/MediaQuery";
 import {
   $updateColor,
   UserOrderBuilder,
   UserOrdersGenerator,
-} from "../../utilis/userOrdersObject";
+} from "../../../utilis/userOrdersObject";
 export default function OrdersQuantity() {
   const [ordersQuantities, setOrdersQuantities] = useState<UserOrderBuilder[]>(
     []
   );
+  const smMatches = Matches().smMatches;
   useEffect(() => {
     let cleanup = false;
     const userOrdersGenerator = new UserOrdersGenerator();
@@ -47,8 +49,8 @@ export default function OrdersQuantity() {
   return (
     <MantineProvider theme={{ fontFamily: "Raleway, sans-serif" }}>
       <Grid>
-        {ordersQuantities.map((order) => (
-          <Grid.Col span={4}>
+        {ordersQuantities.map((order, i) => (
+          <Grid.Col key={i} span={smMatches ? 6 : 4}>
             <OrdersCard
               color={order.color}
               quantity={order.quantity}
@@ -70,6 +72,7 @@ function OrdersCard({
   quantity: number;
   title: string;
 }) {
+  const mdMatches = Matches().mdMatches;
   return (
     <Group
       position="center"
@@ -85,7 +88,7 @@ function OrdersCard({
       <Stack
         sx={{ width: "80%", color: color === "white" ? "black" : "white" }}
       >
-        <Text>{title}</Text>
+        <Text size={mdMatches ? "sm" : "md"}>{title}</Text>
         <Text size="xl" weight={600}>
           {quantity}
         </Text>

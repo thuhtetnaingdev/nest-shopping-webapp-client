@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Anchor,
   Button,
   Center,
@@ -18,10 +19,10 @@ import { Search } from "tabler-icons-react";
 import AuthDrawer from "../AuthComponents/UserProfileDrawer";
 import { useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
-import AvatarComponent from "../HomeComponents/AvatarComponent";
+import AvatarComponent from "./AvatarComponent";
 import { useDispatch } from "react-redux";
 import { openModel } from "../../features/auth/authModel";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   //Redux: User store
@@ -38,16 +39,12 @@ export default function Navbar() {
     display: "none",
   };
 
-  const location = useLocation();
-
-  console.log(location);
-
   return (
     <Grid
       grow
       align="center"
-      py={8}
       sx={(theme: MantineTheme) => ({
+        height: "4.2rem",
         backgroundColor: location.pathname.startsWith("/products")
           ? ""
           : location.pathname === "/"
@@ -101,13 +98,22 @@ export default function Navbar() {
               px="md"
             />
           </MediaQuery>
-          <Button
+          <ActionIcon
             onClick={() => setIsOpen(true)}
-            variant="subtle"
             sx={{ border: "none", outline: "none" }}
+            variant="transparent"
           >
-            <Search size="20" />
-          </Button>
+            <Search
+              size="20"
+              color={
+                location.pathname.startsWith("/products")
+                  ? "black"
+                  : location.pathname === "/"
+                  ? "black"
+                  : "white"
+              }
+            />
+          </ActionIcon>
           <MediaQuery smallerThan="xs" styles={display}>
             <Text onClick={() => setIsOpen(true)}>Search</Text>
           </MediaQuery>
