@@ -1,8 +1,6 @@
 import {
   ActionIcon,
   Anchor,
-  Button,
-  Center,
   CSSObject,
   Grid,
   Group,
@@ -11,25 +9,24 @@ import {
   MantineTheme,
   MediaQuery,
   Text,
-  useMantineTheme,
 } from "@mantine/core";
 import { useClickOutside } from "@mantine/hooks";
 import { useState } from "react";
 import { Search } from "tabler-icons-react";
-import AuthDrawer from "../AuthComponents/UserProfileDrawer";
 import { useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../store";
+import { RootState } from "../../store";
 import AvatarComponent from "./AvatarComponent";
 import { useDispatch } from "react-redux";
-import { openModel } from "../../features/auth/authModel";
 import { Link } from "react-router-dom";
+import { openModal, setType } from "../../features/modalSlice";
+import { AuthModal } from "../AuthComponents/AuthModalComponents";
+import Logout from "../AuthComponents/LogoutModal";
 
 export default function Navbar() {
   //Redux: User store
   const { user } = useSelector((value: RootState) => value.userCredentials);
-  const dispatch = useDispatch();
 
-  const theme = useMantineTheme();
+  const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -43,7 +40,9 @@ export default function Navbar() {
     <Grid
       grow
       align="center"
+      justify="center"
       sx={(theme: MantineTheme) => ({
+        textAlign: "center",
         height: "4.2rem",
         backgroundColor: location.pathname.startsWith("/products")
           ? ""
@@ -58,28 +57,22 @@ export default function Navbar() {
       })}
     >
       <Grid.Col span={1}>
-        <Center>
-          <MantineProvider theme={{ fontFamily: "Sansita Swashed, cursive" }}>
-            <Anchor component={Link} to="/" variant="text" size="xl">
-              JoyBox
-            </Anchor>
-          </MantineProvider>
-        </Center>
+        <MantineProvider theme={{ fontFamily: "Sansita Swashed, cursive" }}>
+          <Anchor component={Link} to="/" variant="text" size="xl">
+            JoyBox
+          </Anchor>
+        </MantineProvider>
       </Grid.Col>
       <MediaQuery smallerThan="md" styles={display}>
         <Grid.Col span={1}>
-          <Center>
-            <Anchor variant="text" px="sm">
-              All
-            </Anchor>
-          </Center>
+          <Anchor variant="text" px="sm">
+            All
+          </Anchor>
         </Grid.Col>
       </MediaQuery>
       <MediaQuery smallerThan="md" styles={display}>
         <Grid.Col span={1} px="md">
-          <Center>
-            <Anchor variant="text">Catagory</Anchor>
-          </Center>
+          <Anchor variant="text">Catagory</Anchor>
         </Grid.Col>
       </MediaQuery>
       <Grid.Col span={7}>
@@ -89,12 +82,12 @@ export default function Navbar() {
               className="Inp"
               variant="unstyled"
               placeholder="Search"
-              sx={{
+              sx={(theme: MantineTheme) => ({
                 width: "50%",
                 background: theme.colors.gray[2],
                 borderRadius: "30px",
                 display: isOpen ? "block" : "none",
-              }}
+              })}
               px="md"
             />
           </MediaQuery>
@@ -120,18 +113,23 @@ export default function Navbar() {
         </Group>
       </Grid.Col>
       <Grid.Col span={1}>
-        <Center>
-          {!user ? (
-            <>
-              <Anchor variant="text" onClick={() => dispatch(openModel())}>
-                Login
-              </Anchor>
-              <AuthDrawer />
-            </>
-          ) : (
-            <AvatarComponent user={user} />
-          )}
-        </Center>
+        {!user ? (
+          <>
+            <Anchor
+              variant="text"
+              onClick={() => {
+                dispatch(setType({ type: "login" }));
+                dispatch(openModal());
+              }}
+            >
+              Login
+            </Anchor>
+            <AuthModal />
+          </>
+        ) : (
+          <AvatarComponent />
+        )}
+        {!location.pathname.startsWith("/profile") && <Logout />}
       </Grid.Col>
     </Grid>
   );

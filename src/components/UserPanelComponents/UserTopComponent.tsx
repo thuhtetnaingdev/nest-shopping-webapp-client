@@ -12,11 +12,17 @@ import {
 import { MdLocationPin } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import Matches from "../../cors/MediaQuery";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import OpenModal from "../ModalComponent/OpenModal";
+import { openModal, setType } from "../../features/modalSlice";
+import { RootState } from "../../store";
 import { logout } from "../../features/auth/authSlice";
+import Logout from "../AuthComponents/LogoutModal";
 
 export const UserTopComponent = () => {
   const { smMatches } = Matches();
+
+  const { type } = useSelector((value: RootState) => value.modalComponent);
 
   const dispatch = useDispatch();
 
@@ -50,12 +56,17 @@ export const UserTopComponent = () => {
             variant="outline"
             color="gray"
             mr={30}
-            onClick={() => dispatch(logout())}
+            onClick={() => {
+              dispatch(setType({ type: "logout" }));
+              dispatch(openModal());
+            }}
           >
             Sign Out
           </Button>
         )}
       </Group>
+      {/* Logout Modal */}
+      <Logout />
     </Box>
   );
 };

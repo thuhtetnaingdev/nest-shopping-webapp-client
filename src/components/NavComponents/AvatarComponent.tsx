@@ -5,16 +5,13 @@ import {
   TruckDelivery,
   UserCircle,
 } from "tabler-icons-react";
-import { logout } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../ModalComponent/ConfirmationModal";
-import { useState } from "react";
+import { openModal, setType } from "../../features/modalSlice";
 
 export default function AvatarComponent() {
-  const [isOpened, setIsOpened] = useState(false);
   const userDetails = useSelector((value: RootState) => value.userCredentials);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,7 +50,10 @@ export default function AvatarComponent() {
       <Menu.Item
         color="red"
         icon={<Logout size={20} strokeWidth={1} color={"black"} />}
-        onClick={() => dispatch(logout())}
+        onClick={() => {
+          dispatch(setType({ type: "logout" }));
+          dispatch(openModal())
+        }}
       >
         Logout
       </Menu.Item>

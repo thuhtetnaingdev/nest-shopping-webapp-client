@@ -8,15 +8,21 @@ import { RootObject } from "../cors/types/ItemTypes";
 
 export default function Deals() {
   const { smMatches } = Matches();
-  const [activeTab, setActiveTab] = useState(0);
 
   //products item
   const [productsData, setProductsData] = useState<RootObject[]>([]);
 
+  enum TabsKey {
+    featured = 0,
+    tech = 1,
+  }
+
   //loading hook
   const [loading, setLoading] = useState(true);
 
+  const [activeTab, setActiveTab] = useState(TabsKey.featured);
   const [activePage, setActivePage] = useState(1);
+
   const [_, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
@@ -27,6 +33,14 @@ export default function Deals() {
     setActiveTab(active);
     navigate(`${tabKey === "featured" ? "" : tabKey}`);
   };
+
+  useEffect(() => {
+    let tabName: number = products ? 1 : 0;
+    setActiveTab(tabName);
+    return function () {
+      tabName = 0;
+    };
+  }, []);
 
   const fetchData = useCallback(async () => {
     try {

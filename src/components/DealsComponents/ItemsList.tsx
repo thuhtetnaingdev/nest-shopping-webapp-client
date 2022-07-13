@@ -48,7 +48,7 @@ export default function ItemsList({
                     {item.title}
                   </Anchor>
                   <Text size="xl" weight={700}>
-                    {item.price}
+                    {item.price}$
                   </Text>
                   <Group>
                     <Text color="gray" size="sm">

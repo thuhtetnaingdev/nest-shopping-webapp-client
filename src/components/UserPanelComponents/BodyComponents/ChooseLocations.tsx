@@ -12,38 +12,41 @@ import {
 import { BiEdit, BiMenu, BiPlus, BiTrash } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import Matches from "../../../cors/MediaQuery";
-import {
-  setAddressOpened,
-  setDeleteOpened,
-  setModalOpened,
-} from "../../../features/addressSlice";
+import { closeModal, openModal, setType } from "../../../features/modalSlice";
 import { RootState } from "../../../store";
-import UserBodyMenuModal from "./MenuModal";
+import OpenModal from "../../ModalComponent/OpenModal";
+import CreateAddressModal from "./MenuModal/CreateAddressModal";
 
 export default function ChooseLocations() {
   const smMatches = Matches().smMatches;
 
-  const { isDeleteOpened, isModalOpened, isAddressCreateOpened } = useSelector(
-    (value: RootState) => value.addressCredentials
-  );
+  const { type } = useSelector((value: RootState) => value.modalComponent);
 
   const dispatch = useDispatch();
 
   function handleDeleteButton() {
-    dispatch(setModalOpened(true));
+    dispatch(openModal());
   }
 
   function handleCancelButton() {
-    dispatch(setDeleteOpened(false));
+    dispatch(closeModal());
   }
   return (
     <>
-      <UserBodyMenuModal />
+      {type === "deleteAddress" && (
+        <OpenModal
+          header="Are you sure want to delete"
+          btnText="Delete"
+        />
+      )}
+
+      {/* Create Address Modal */}
+      {type === "createAddress" && <CreateAddressModal />}
       <Group mt="md" position="apart">
         <Text size="xl" color="gray" weight={300}>
           Locations
         </Text>
-        {isDeleteOpened || isAddressCreateOpened || isModalOpened || (
+        {type === "createAddress" || type === "deleteAddress" || (
           <Menu
             control={
               <ActionIcon>
@@ -54,15 +57,15 @@ export default function ChooseLocations() {
             <Menu.Item
               icon={<BiPlus size="20" />}
               onClick={() => {
-                dispatch(setAddressOpened(true));
-                dispatch(setModalOpened(true));
+                dispatch(setType({ type: "createAddress" }));
+                dispatch(openModal());
               }}
             >
               Create new address
             </Menu.Item>
             <Menu.Item
               icon={<BiTrash size="20" />}
-              onClick={() => dispatch(setDeleteOpened(true))}
+              onClick={() => dispatch(setType({ type: "deleteAddress" }))}
             >
               Delete
             </Menu.Item>
@@ -71,20 +74,20 @@ export default function ChooseLocations() {
       </Group>
       <Grid>
         <Grid.Col span={smMatches ? 12 : 6}>
-          <Locations isDeleteOpened={isDeleteOpened} />
+          <Locations isDeleteOpened={type === "deleteAddress"} />
         </Grid.Col>
         <Grid.Col span={smMatches ? 12 : 6}>
-          <Locations isDeleteOpened={isDeleteOpened} />
+          <Locations isDeleteOpened={type === "deleteAddress"} />
         </Grid.Col>
       </Grid>
       {/* Delete Button */}
-      {isDeleteOpened && (
+      {type === "deleteAddress" && (
         <Group position="right">
           <Button
             onClick={handleDeleteButton}
             leftIcon={<BiTrash size="20" />}
-            color={!isDeleteOpened ? "gray" : "red"}
-            variant={!isDeleteOpened ? "outline" : "filled"}
+            color={type !== "deleteAddress" ? "gray" : "red"}
+            variant={type !== "deleteAddress" ? "outline" : "filled"}
           >
             Delete
           </Button>

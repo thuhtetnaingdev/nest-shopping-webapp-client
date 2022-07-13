@@ -9,10 +9,8 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDispatch } from "react-redux";
-import {
-  setAddressOpened,
-  setModalOpened,
-} from "../../../../features/addressSlice";
+import { closeModal } from "../../../../features/modalSlice";
+import OpenModal from "../../../ModalComponent/OpenModal";
 
 export default function CreateAddressModal() {
   const dispatch = useDispatch();
@@ -28,59 +26,61 @@ export default function CreateAddressModal() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    dispatch(closeModal());
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <InputWrapper required>
-        <Stack>
-          <TextInput
-            required
-            label="Name"
-            placeholder="Input your name"
-            {...form.getInputProps("name")}
-          />
-          <Group grow>
+    <OpenModal title="Create New Address">
+      <form onSubmit={handleSubmit}>
+        <InputWrapper required>
+          <Stack>
             <TextInput
               required
-              type="number"
-              label="Phone Number"
-              placeholder="Phone Number"
-              {...form.getInputProps("phone")}
+              label="Name"
+              placeholder="Input your name"
+              {...form.getInputProps("name")}
             />
-            <Select
+            <Group grow>
+              <TextInput
+                required
+                type="number"
+                label="Phone Number"
+                placeholder="Phone Number"
+                {...form.getInputProps("phone")}
+              />
+              <Select
+                required
+                label="City"
+                data={["Yangon", "Mandalay"]}
+                placeholder="City"
+                {...form.getInputProps("city")}
+              />
+            </Group>
+            <TextInput
               required
-              label="City"
-              data={["Yangon", "Mandalay"]}
-              placeholder="City"
-              {...form.getInputProps("city")}
+              label="Township"
+              placeholder="Input your township"
+              {...form.getInputProps("township")}
             />
-          </Group>
-          <TextInput
-            required
-            label="Township"
-            placeholder="Input your township"
-            {...form.getInputProps("township")}
-          />
-          <Textarea
-            required
-            label="Address"
-            placeholder="Input your full address"
-            {...form.getInputProps("address")}
-          />
-          <Group position="right" mt="md">
-            <Button type="submit">Add</Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                dispatch(setModalOpened(false));
-                dispatch(setAddressOpened(false));
-              }}
-            >
-              Cancel
-            </Button>
-          </Group>
-        </Stack>
-      </InputWrapper>
-    </form>
+            <Textarea
+              required
+              label="Address"
+              placeholder="Input your full address"
+              {...form.getInputProps("address")}
+            />
+            <Group position="right" mt="md">
+              <Button type="submit">Add</Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  dispatch(closeModal());
+                }}
+              >
+                Cancel
+              </Button>
+            </Group>
+          </Stack>
+        </InputWrapper>
+      </form>
+    </OpenModal>
   );
 }

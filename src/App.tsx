@@ -15,6 +15,7 @@ import SingleItem from "./pages/SingleItem";
 import Deals from "./pages/Deals";
 import { useEffect, useState } from "react";
 import { UserPage } from "./pages/UserPage";
+import AuthRoutes from "./utilis/AuthRoutes/AuthRoutes";
 
 function App() {
   const [bgColor, setBgColor] = useState("white");
@@ -51,8 +52,8 @@ function App() {
               xs: 540,
               sm: 720,
               md: 960,
-              lg: 1140,
-              xl: 1250,
+              lg: 1250,
+              xl: 1450,
             },
           },
         }}
@@ -64,14 +65,21 @@ function App() {
           p={5}
         >
           <Navbar />
-          <Container size="xl" mt="sm" mx="auto">
+          <Container size="lg" mt="sm" mx="auto">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products/:item" element={<SingleItem />} />
               <Route path="deals" element={<Deals />}>
                 <Route path=":products" element={<Outlet />} />
               </Route>
-              <Route path="/profile" element={<UserPage />} />
+              <Route
+                path="/profile"
+                element={
+                  <AuthRoutes>
+                    <UserPage />
+                  </AuthRoutes>
+                }
+              />
             </Routes>
           </Container>
         </Paper>

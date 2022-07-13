@@ -7,16 +7,16 @@ import {
   PasswordInput,
   TextInput,
 } from "@mantine/core";
-import { useForm } from "../../utilis/authHooks";
+import { useForm } from "../../../utilis/authHooks";
 import { User, Lock } from "tabler-icons-react";
 import { useMutation } from "@apollo/client";
-import { LOGIN } from "../../utilis/gqlRequests/authRequests";
+import { LOGIN } from "../../../utilis/gqlRequests/authRequests";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginOrRegister } from "../../features/auth/authSlice";
-import { closeModel } from "../../features/auth/authModel";
+import { loginOrRegister } from "../../../features/auth/authSlice";
+import { closeModal, setType } from "../../../features/modalSlice";
 
-export default function Login(props: { isClickedLogin: any }) {
+export default function Login() {
   const dispatch = useDispatch();
 
   const { form } = useForm({
@@ -29,7 +29,7 @@ export default function Login(props: { isClickedLogin: any }) {
   useEffect(() => {
     if (data) {
       dispatch(loginOrRegister(data.login));
-      dispatch(closeModel());
+      dispatch(closeModal());
     }
   }, [data]);
 
@@ -80,7 +80,7 @@ export default function Login(props: { isClickedLogin: any }) {
                 fontSize: "0.9em",
                 display: "inline-block",
               }}
-              onClick={() => props.isClickedLogin(false)}
+              onClick={() => dispatch(setType({ type: "register" }))}
             >
               Haven't account? Register.
             </Anchor>

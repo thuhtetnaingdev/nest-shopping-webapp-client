@@ -10,17 +10,17 @@ import {
   InputWrapper,
   LoadingOverlay,
 } from "@mantine/core";
-import { useForm } from "../../utilis/authHooks";
+import { useForm } from "../../../utilis/authHooks";
 import { DatePicker } from "@mantine/dates";
 import { Lock, Mail, Phone, User } from "tabler-icons-react";
 import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { REGISTER } from "../../utilis/gqlRequests/authRequests";
+import { REGISTER } from "../../../utilis/gqlRequests/authRequests";
 import { useDispatch } from "react-redux";
-import { loginOrRegister } from "../../features/auth/authSlice";
-import { closeModel } from "../../features/auth/authModel";
+import { loginOrRegister } from "../../../features/auth/authSlice";
+import { closeModal, setType } from "../../../features/modalSlice";
 
-export default function Register(props: { isClickedLogin: any }) {
+export default function Register() {
   const [isError, setIsError] = useState(true);
 
   const [isChecked, setIsChecked] = useState(false);
@@ -43,7 +43,7 @@ export default function Register(props: { isClickedLogin: any }) {
   useEffect(() => {
     if (data) {
       dispatch(loginOrRegister(data.register));
-      dispatch(closeModel());
+      dispatch(closeModal());
     }
   }, [data]);
   useEffect(() => {
@@ -120,6 +120,7 @@ export default function Register(props: { isClickedLogin: any }) {
             }
           />
           <Select
+            required
             label="Gender"
             placeholder="Pick gender"
             data={[
@@ -164,7 +165,7 @@ export default function Register(props: { isClickedLogin: any }) {
               fontSize: "0.9em",
               display: "inline-block",
             }}
-            onClick={() => props.isClickedLogin(true)}
+            onClick={() => dispatch(setType({ type: "login" }))}
           >
             Have an account? Login
           </Anchor>
