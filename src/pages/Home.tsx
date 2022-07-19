@@ -6,17 +6,18 @@ import TodayDeals from "../components/HomeComponents/TodayDeals";
 import Iu from "../public/images/iu.png";
 import Iu2 from "../public/images/iu2.jpg";
 import Iu3 from "../public/images/iu3.jpg";
+import { Container } from "@mantine/core";
 
 export default function Home() {
   const images = [Iu, Iu2, Iu3];
 
   return (
-    <>
+    <Container size="lg" mt="sm" mx="auto">
       <ImageCarousel autoplay={true} images={images} />
       <Recommendation />
       <Categories />
       <TodayDeals />
       <PopularItems />
-    </>
+    </Container>
   );
 }

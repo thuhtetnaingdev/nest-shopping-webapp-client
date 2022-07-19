@@ -23,6 +23,7 @@ import { closeModal, setType } from "../../../features/modalSlice";
 export default function Register() {
   const [isError, setIsError] = useState(true);
 
+  //checkbox
   const [isChecked, setIsChecked] = useState(false);
 
   const dispatch = useDispatch();

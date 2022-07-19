@@ -36,13 +36,13 @@ export default function AvatarComponent() {
       </Menu.Item>
       <Menu.Item
         icon={<ShoppingCart size={20} strokeWidth={1} color={"black"} />}
-        onClick={() => navigate("/user/cart")}
+        onClick={() => navigate("/profile/cart")}
       >
         Cart
       </Menu.Item>
       <Menu.Item
         icon={<TruckDelivery size={20} strokeWidth={1} color={"black"} />}
-        onClick={() => navigate("/user/orders")}
+        onClick={() => navigate("/profile/orders")}
       >
         Orders
       </Menu.Item>
@@ -52,7 +52,7 @@ export default function AvatarComponent() {
         icon={<Logout size={20} strokeWidth={1} color={"black"} />}
         onClick={() => {
           dispatch(setType({ type: "logout" }));
-          dispatch(openModal())
+          dispatch(openModal());
         }}
       >
         Logout

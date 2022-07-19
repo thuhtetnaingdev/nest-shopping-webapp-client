@@ -1,6 +1,12 @@
 import { MantineProvider, Pagination, Stack, Tabs } from "@mantine/core";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import ItemsList from "../components/DealsComponents/ItemsList";
 import Matches from "../cors/MediaQuery";
 import axios from "axios";
@@ -23,26 +29,19 @@ export default function Deals() {
   const [activeTab, setActiveTab] = useState(TabsKey.featured);
   const [activePage, setActivePage] = useState(1);
 
-  const [_, setSearchParams] = useSearchParams();
-
+  // ---------react router hooks--------------
   const navigate = useNavigate();
+  const [_, setSearchParams] = useSearchParams();
+  const { products } = useParams();
+  const location = useLocation();
+  //-------------------------------------------
 
-  const { products } = useParams(); //TODO:
+  //page number from location
+  const query = location.search.slice(6);
 
-  const onChange = (active: number, tabKey: string) => {
-    setActiveTab(active);
-    navigate(`${tabKey === "featured" ? "" : tabKey}`);
-  };
-
-  useEffect(() => {
-    let tabName: number = products ? 1 : 0;
-    setActiveTab(tabName);
-    return function () {
-      tabName = 0;
-    };
-  }, []);
-
-  const fetchData = useCallback(async () => {
+  //fetch data from fake store api
+  const fetchData = async () => {
+    console.log("fetch");
     try {
       setLoading(true);
       const { data } = await axios.get(`https://fakestoreapi.com/products/`);
@@ -53,22 +52,51 @@ export default function Deals() {
       console.log(error);
       setProductsData([]);
     }
-  }, [activePage, activeTab]);
+  };
 
+  //Change tab function
+  const onTabChange = (active: number, tabKey: string) => {
+    setActiveTab(active);
+    setActivePage(1);
+    fetchData(); //TODO:
+    navigate({
+      pathname: tabKey !== "featured" ? tabKey : "",
+      search: createSearchParams({ page: "1" }).toString(),
+    });
+  };
+
+  //Change page function
+  const changeActivePage = (e: number) => {
+    setActivePage(e);
+    const searchParam = createSearchParams({ page: e.toString() });
+    setSearchParams(searchParam);
+    fetchData(); //TODO:
+  };
+
+  //set page with query and page
   useEffect(() => {
-    activePage !== 1
-      ? setSearchParams({ page: activePage.toString() })
-      : navigate(`${products ? products : ""}`);
+    //change query string to number type
+    const queryToNum: number = query ? parseInt(query) : 1;
 
-    fetchData();
-    return () => setProductsData([]);
-  }, [activePage]);
+    queryToNum === 1 && setSearchParams(createSearchParams({ page: "1" }));
+
+    let tabName: number = products ? 1 : 0;
+
+    setActiveTab(tabName);
+    setActivePage(queryToNum);
+
+    fetchData(); //TODO:
+
+    return function () {
+      tabName = 0;
+    };
+  }, []);
 
   return (
     <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
       <Stack align="center" mb="lg">
         {/**need to add more tabs TODO: */}
-        <Tabs active={activeTab} position="right" onTabChange={onChange}>
+        <Tabs active={activeTab} position="right" onTabChange={onTabChange}>
           <Tabs.Tab label="Featured" tabKey="featured">
             <ItemsList loading={loading} data={productsData} />
           </Tabs.Tab>
@@ -83,7 +111,7 @@ export default function Deals() {
           siblings={1}
           initialPage={10}
           page={activePage}
-          onChange={setActivePage}
+          onChange={changeActivePage}
         />
       </Stack>
     </MantineProvider>

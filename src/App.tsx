@@ -16,6 +16,7 @@ import Deals from "./pages/Deals";
 import { useEffect, useState } from "react";
 import { UserPage } from "./pages/UserPage";
 import AuthRoutes from "./utilis/AuthRoutes/AuthRoutes";
+import Cart from "./pages/Cart";
 
 function App() {
   const [bgColor, setBgColor] = useState("white");
@@ -65,13 +66,13 @@ function App() {
           p={5}
         >
           <Navbar />
-          <Container size="lg" mt="sm" mx="auto">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products/:item" element={<SingleItem />} />
               <Route path="deals" element={<Deals />}>
                 <Route path=":products" element={<Outlet />} />
               </Route>
+              <Route path="/profile/cart" element={<Cart />} />
               <Route
                 path="/profile"
                 element={
@@ -81,7 +82,6 @@ function App() {
                 }
               />
             </Routes>
-          </Container>
         </Paper>
       </MantineProvider>
     </ColorSchemeProvider>
