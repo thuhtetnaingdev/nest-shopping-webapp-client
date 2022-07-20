@@ -1,136 +1,100 @@
 import {
   ActionIcon,
   Box,
-  Button,
   Group,
   Image,
   LoadingOverlay,
   Table,
   Text,
 } from "@mantine/core";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Matches from "../../cors/MediaQuery";
+import { CartData, Product } from "../../cors/types/CartType";
 import {
-  cartData$,
+  cartUpdateValue,
+  fetchData,
   IncDec$,
-  loading$,
-  rawData$,
-  total$,
-} from "../../utilis/store";
-
-interface Product {
-  productId: number;
-  quantity: number;
-  description?: string;
-  img?: string;
-  price?: number;
-  title?: string;
-  total?: number;
-}
-
-interface CartData {
-  id: number;
-  userId: number;
-  date: Date;
-  products: Product[];
-  __v: number;
-}
+} from "../../utilis/rxjs/cartRxStore";
 
 export default function CartTable() {
-  const [cartData, setCartData] = useState<Product[]>([]);
-  const [total, setTotal] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
-
   const smMatch = Matches().smMatches;
 
-  useEffect(() => {
-    axios
-      .get("https://fakestoreapi.com/carts/1")
-      .then((res) => {
-        total$.next(res.data);
-        return res.data.products;
-      })
-      .then((res) => rawData$.next(res));
-    const loading = loading$.subscribe(setLoading);
-    const cartData = cartData$.subscribe(
-      (val) => {
-        setCartData(val.products);
-        setTotal(val.total);
-      },
-      (err) => console.log(err)
-    );
-
-    return () => {
-      cartData.unsubscribe();
-      loading.unsubscribe();
-    };
-  }, []);
+  const LINK = "https://fakestoreapi.com/carts/1";
+  const source = useMemo(() => fetchData<CartData>(LINK), []);
+  const [finalValue, loading, errorMessage] = cartUpdateValue(source, IncDec$);
 
   function updateQuantity(productId: number, quantity: number) {
     const initialVal = IncDec$.value;
-    if (IncDec$.value.find((prod) => prod.productId === productId)) {
+    const findVal = IncDec$.value.find((prod) => prod.productId === productId);
+    if (findVal) {
       const getIndex = IncDec$.value.findIndex(
         (prod) => prod.productId === productId
       );
       initialVal[getIndex].quantity = quantity;
       IncDec$.next(initialVal);
+    } else {
+      IncDec$.next([...IncDec$.value, { productId, quantity }]);
     }
-    IncDec$.next([...IncDec$.value, { productId, quantity }]);
   }
 
-  const TableBody = cartData.map((value, i) => (
-    <tr key={value.productId}>
-      <td>
-        <Image width={smMatch ? 30 : 70} src={value.img} />
-      </td>
-      <td>
-        <Text
-          weight="bold"
-          size="sm"
-          sx={{ fontSize: smMatch ? "0.6rem" : "" }}
-          lineClamp={2}
-        >
-          {value.title}
-        </Text>
-        <Text
-          lineClamp={2}
-          size="xs"
-          sx={{ fontSize: smMatch ? "0.6rem" : "" }}
-        >
-          {value.description}
-        </Text>
-        {smMatch && (
-          <Text size="xs" color="orange">
-            {value.price}$
-          </Text>
-        )}
-      </td>
-      {!smMatch && (
+  const TableBody =
+    finalValue.products &&
+    finalValue.products.map((value: Product) => (
+      <tr key={value.productId}>
         <td>
-          <Text weight={600} size="xs">
-            {value.price}$
+          <Image width={smMatch ? 30 : 70} src={value.img} />
+        </td>
+        <td>
+          <Text
+            weight="bold"
+            size="sm"
+            sx={{ fontSize: smMatch ? "0.6rem" : "" }}
+            lineClamp={2}
+          >
+            {value.title}
+          </Text>
+          <Text
+            lineClamp={2}
+            size="xs"
+            sx={{ fontSize: smMatch ? "0.6rem" : "" }}
+          >
+            {value.description}
+          </Text>
+          {smMatch && (
+            <Text size="xs" color="orange">
+              {value.price}$
+            </Text>
+          )}
+        </td>
+        {!smMatch && (
+          <td>
+            <Text weight={600} size="sm">
+              {value.price}$
+            </Text>
+          </td>
+        )}
+        <td>
+          <IncDecBtn
+            quantity={value.quantity}
+            productId={value.productId}
+            updateQuantity={updateQuantity}
+          />
+        </td>
+        <td>
+          <Text
+            weight={600}
+            size="sm"
+            sx={{ fontSize: smMatch ? "0.6rem" : "" }}
+          >
+            {value.total?.toFixed(2)}$
           </Text>
         </td>
-      )}
-      <td>
-        <IncDecBtn
-          quantity={value.quantity}
-          productId={value.productId}
-          updateQuantity={updateQuantity}
-        />
-      </td>
-      <td>
-        <Text weight={600} size="sm" sx={{ fontSize: smMatch ? "0.6rem" : "" }}>
-          {value.total?.toFixed(2)}$
-        </Text>
-      </td>
-    </tr>
-  ));
+      </tr>
+    ));
   return (
     <Box>
       <LoadingOverlay visible={loading} />
-      <Table horizontalSpacing="sm">
+      <Table horizontalSpacing={smMatch ? "xs" : "xl"}>
         <thead>
           <tr>
             <th style={{ width: "10%" }}>Image</th>
@@ -140,9 +104,11 @@ export default function CartTable() {
             <th>Total</th>
           </tr>
         </thead>
-        <tbody>{TableBody}</tbody>
+        {finalValue.products && <tbody>{TableBody}</tbody>}
       </Table>
-      <Text weight={600}>{total.toFixed(2)}$</Text>
+      <Text weight={600}>
+        {finalValue.total ? finalValue.total.toFixed(2) : 0}$
+      </Text>
     </Box>
   );
 }

@@ -1,4 +1,10 @@
-import { MantineProvider, Pagination, Stack, Tabs } from "@mantine/core";
+import {
+  Container,
+  MantineProvider,
+  Pagination,
+  Stack,
+  Tabs,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import {
   createSearchParams,
@@ -94,26 +100,28 @@ export default function Deals() {
 
   return (
     <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
-      <Stack align="center" mb="lg">
-        {/**need to add more tabs TODO: */}
-        <Tabs active={activeTab} position="right" onTabChange={onTabChange}>
-          <Tabs.Tab label="Featured" tabKey="featured">
-            <ItemsList loading={loading} data={productsData} />
-          </Tabs.Tab>
-          <Tabs.Tab label="Tech" tabKey="tech">
-            <ItemsList loading={loading} data={productsData} />
-          </Tabs.Tab>
-        </Tabs>
-        <Pagination
-          size={smMatches ? "sm" : "md"}
-          sx={{ minWidth: "200px" }}
-          total={10}
-          siblings={1}
-          initialPage={10}
-          page={activePage}
-          onChange={changeActivePage}
-        />
-      </Stack>
+      <Container size="xl" mt="sm">
+        <Stack align="center" mb="lg">
+          {/**need to add more tabs TODO: */}
+          <Tabs active={activeTab} position="right" onTabChange={onTabChange}>
+            <Tabs.Tab label="Featured" tabKey="featured">
+              <ItemsList loading={loading} data={productsData} />
+            </Tabs.Tab>
+            <Tabs.Tab label="Tech" tabKey="tech">
+              <ItemsList loading={loading} data={productsData} />
+            </Tabs.Tab>
+          </Tabs>
+          <Pagination
+            size={smMatches ? "sm" : "md"}
+            sx={{ minWidth: "200px" }}
+            total={10}
+            siblings={1}
+            initialPage={10}
+            page={activePage}
+            onChange={changeActivePage}
+          />
+        </Stack>
+      </Container>
     </MantineProvider>
   );
 }

@@ -1,7 +1,7 @@
 import Item from "../components/SingleItemComponents/TopItemComponents";
 import PolicyAndLocation from "../components/SingleItemComponents/PolicyAndLocation";
 import ItemTabs from "../components/SingleItemComponents/ItemTabsDetails";
-import { Box, MantineProvider } from "@mantine/core";
+import { Box, Container, MantineProvider } from "@mantine/core";
 import Ratings from "../components/SingleItemComponents/Ratings";
 import { useParams } from "react-router-dom";
 import Reviews from "../components/SingleItemComponents/ProductReviews";
@@ -39,18 +39,20 @@ export default function SingleItem() {
   }, []);
 
   return (
-    <Box mb="lg">
-      <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
-        <Item />
-        {item && (
-          <>
-            <PolicyAndLocation />
-            <ItemTabs />
-            {!match.smMatches && <Ratings />}
-            <Reviews />
-          </>
-        )}
-      </MantineProvider>
-    </Box>
+    <Container size="lg" mt="sm">
+      <Box mb="lg">
+        <MantineProvider theme={{ fontFamily: "Roboto, sans-serif" }}>
+          <Item />
+          {item && (
+            <>
+              <PolicyAndLocation />
+              <ItemTabs />
+              {!match.smMatches && <Ratings />}
+              <Reviews />
+            </>
+          )}
+        </MantineProvider>
+      </Box>
+    </Container>
   );
 }
