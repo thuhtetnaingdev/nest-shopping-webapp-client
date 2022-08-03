@@ -13,11 +13,8 @@ import { MdLocationPin } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import Matches from "../../cors/MediaQuery";
 import { useDispatch, useSelector } from "react-redux";
-import OpenModal from "../ModalComponent/OpenModal";
 import { openModal, setType } from "../../features/modalSlice";
 import { RootState } from "../../store";
-import { logout } from "../../features/auth/authSlice";
-import Logout from "../AuthComponents/LogoutModal";
 
 export const UserTopComponent = () => {
   const { smMatches } = Matches();
@@ -29,11 +26,11 @@ export const UserTopComponent = () => {
   return (
     <Box>
       <Group
-        sx={(theme: MantineTheme) => ({
+        sx={{
           height: "250px",
           paddingBottom: "30px",
           background: "white",
-        })}
+        }}
         position="apart"
         align="flex-end"
       >
@@ -65,8 +62,6 @@ export const UserTopComponent = () => {
           </Button>
         )}
       </Group>
-      {/* Logout Modal */}
-      <Logout />
     </Box>
   );
 };

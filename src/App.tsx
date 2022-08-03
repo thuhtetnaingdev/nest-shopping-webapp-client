@@ -17,17 +17,23 @@ import { useEffect, useState } from "react";
 import { UserPage } from "./pages/UserPage";
 import AuthRoutes from "./utilis/AuthRoutes/AuthRoutes";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import OrdersDetails from "./pages/OrdersDetails";
 
 function App() {
   const [bgColor, setBgColor] = useState("white");
   const location = useLocation();
 
   useEffect(() => {
-    location.pathname.startsWith("/products")
-      ? setBgColor("white")
-      : location.pathname !== "/"
-      ? setBgColor("#E9ECEF")
-      : setBgColor("white");
+    if (
+      location.pathname.startsWith("/products") ||
+      location.pathname === "/" ||
+      location.pathname.startsWith("/profile/")
+    ) {
+      setBgColor("white");
+    } else {
+      setBgColor("#E9ECEF");
+    }
     return () => {
       setBgColor("E9ECEF");
     };
@@ -66,22 +72,38 @@ function App() {
           p={5}
         >
           <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/products/:item" element={<SingleItem />} />
-              <Route path="deals" element={<Deals />}>
-                <Route path=":products" element={<Outlet />} />
-              </Route>
-              <Route path="/profile/cart" element={<Cart />} />
-              <Route
-                path="/profile"
-                element={
-                  <AuthRoutes>
-                    <UserPage />
-                  </AuthRoutes>
-                }
-              />
-            </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products/:item" element={<SingleItem />} />
+            <Route path="deals" element={<Deals />}>
+              <Route path=":products" element={<Outlet />} />
+            </Route>
+            <Route path="/profile/cart" element={<Cart />} />
+            <Route
+              path="/profile"
+              element={
+                <AuthRoutes>
+                  <UserPage />
+                </AuthRoutes>
+              }
+            />
+            <Route
+              path="/profile/orders"
+              element={
+                <AuthRoutes>
+                  <Orders />
+                </AuthRoutes>
+              }
+            />
+            <Route
+              path="/profile/orders/details"
+              element={
+                <AuthRoutes>
+                  <OrdersDetails />
+                </AuthRoutes>
+              }
+            />
+          </Routes>
         </Paper>
       </MantineProvider>
     </ColorSchemeProvider>

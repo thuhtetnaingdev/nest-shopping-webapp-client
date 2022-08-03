@@ -19,9 +19,7 @@ export default function OpenModal({
   btnText?: string;
   size?: string;
 }) {
-  const { type, isOpen } = useSelector(
-    (value: RootState) => value.modalComponent
-  );
+  const { isOpen } = useSelector((value: RootState) => value.modalComponent);
 
   const dispatch = useDispatch();
 
@@ -49,7 +47,7 @@ export default function OpenModal({
           <Text>{header}</Text>
           <Group position="right">
             <Button color="red" onClick={handleConfirm} name="submit">
-              {btnText}
+              {btnText ? btnText : "Confirmation"}
             </Button>
             <Button
               color="red"

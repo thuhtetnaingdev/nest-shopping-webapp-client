@@ -1,30 +1,27 @@
-import { original } from "@reduxjs/toolkit";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {
   BehaviorSubject,
   combineLatestWith,
   concatMap,
+  filter,
   from,
   map,
   mergeMap,
   Observable,
+  Subject,
   toArray,
 } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { CartData, Product, UpdateTotal } from "../../cors/types/CartType";
 import { RootObject } from "../../cors/types/ItemTypes";
 
-interface ErrorHandler {
-  isError: boolean;
-  message: string;
-}
-
+//fetch data and return json observable
 export function fetchData<T>(LINK: string): Observable<T> {
   return ajax.getJSON(LINK);
 }
 
-export function useSubject<T>(source$: Observable<T>) {}
+//Increase and Decrease on click
 export const IncDec$ = new BehaviorSubject<
   {
     productId: number;
@@ -32,14 +29,18 @@ export const IncDec$ = new BehaviorSubject<
   }[]
 >([]);
 
+export const remove$ = new BehaviorSubject<number[]>([]);
+
+//Update fetched values
 export function cartUpdateValue(
   source$: Observable<CartData>,
   IncDec$: BehaviorSubject<UpdateTotal[]>
-) {
+): [CartData, boolean, string] {
   const [value, setValue] = useState<any>({});
   const [errorMessaage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
+  //-------------fetch products descriptions----------------
   function FetchMapValue(value: Product[]) {
     return from(value).pipe(
       concatMap((x) =>
@@ -57,10 +58,22 @@ export function cartUpdateValue(
       toArray()
     );
   }
+  //--------------------------------------------------------
+
+  //update product and make changes on INC and DEC
   const product$ = source$.pipe(
     map((x) => x.products),
-    mergeMap((y) => FetchMapValue(y)),
+    //merge to fetch operator to fetch particular items
+    concatMap((y) => FetchMapValue(y)),
+    concatMap((data) =>
+      remove$.pipe(
+        map((value) =>
+          data.filter((product) => !value.includes(product.productId))
+        )
+      )
+    ),
     combineLatestWith(IncDec$),
+    //update on change
     map(([original, IncDec]) =>
       original.map((data) => {
         const findIncDec = IncDec.find((f) => f.productId === data.productId);
@@ -70,8 +83,12 @@ export function cartUpdateValue(
         return data;
       })
     ),
+    //calculate single item price
     map((y) =>
-      y.map((data) => ({ ...data, total: data.quantity * data.price }))
+      y.map((data) => ({
+        ...data,
+        total: data.quantity * data.price,
+      }))
     )
   );
   const finalData = source$.pipe(
@@ -85,12 +102,11 @@ export function cartUpdateValue(
       return {
         ...originalSource,
         products: products,
-        total: finalTotalPrice,
+        total: finalTotalPrice + (finalTotalPrice * 5) / 100,
       };
     })
   );
   useEffect(() => {
-    console.log('i got called')
     const source = finalData.subscribe(
       (x) => {
         setValue(x);
@@ -102,5 +118,5 @@ export function cartUpdateValue(
       source.unsubscribe();
     };
   }, [source$]);
-  return [value, loading, errorMessaage] as const;
+  return [value, loading, errorMessaage];
 }

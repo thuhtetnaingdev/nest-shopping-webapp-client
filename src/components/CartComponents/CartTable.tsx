@@ -1,27 +1,31 @@
 import {
   ActionIcon,
+  Anchor,
   Box,
   Group,
   Image,
-  LoadingOverlay,
   Table,
   Text,
 } from "@mantine/core";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import { MdOutlineCancel } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Matches from "../../cors/MediaQuery";
 import { CartData, Product } from "../../cors/types/CartType";
-import {
-  cartUpdateValue,
-  fetchData,
-  IncDec$,
-} from "../../utilis/rxjs/cartRxStore";
+import { openModal, setType } from "../../features/modalSlice";
+import { RootState } from "../../store";
+import { IncDec$, remove$ } from "../../utilis/rxjs/cartRxStore";
+import OpenModal from "../ModalComponent/OpenModal";
 
-export default function CartTable() {
+export default function CartTable({ value }: { value: CartData }) {
+  const [removeItem, setRemoveItem] = useState<number>(0);
+
+  const { type } = useSelector((value: RootState) => value.modalComponent);
+  const dispatch = useDispatch();
   const smMatch = Matches().smMatches;
 
-  const LINK = "https://fakestoreapi.com/carts/1";
-  const source = useMemo(() => fetchData<CartData>(LINK), []);
-  const [finalValue, loading, errorMessage] = cartUpdateValue(source, IncDec$);
+  const mdMatch = Matches().mdMatches;
 
   function updateQuantity(productId: number, quantity: number) {
     const initialVal = IncDec$.value;
@@ -37,36 +41,38 @@ export default function CartTable() {
     }
   }
 
+  function removeHandler() {
+    remove$.next([...remove$.value, removeItem]);
+  }
+
   const TableBody =
-    finalValue.products &&
-    finalValue.products.map((value: Product) => (
-      <tr key={value.productId}>
+    value.products &&
+    value.products.map((value: Product) => (
+      <tr key={value.productId} style={{ flexWrap: "nowrap" }}>
         <td>
           <Image width={smMatch ? 30 : 70} src={value.img} />
         </td>
         <td>
-          <Text
+          <Anchor
             weight="bold"
             size="sm"
-            sx={{ fontSize: smMatch ? "0.6rem" : "" }}
+            color="dark"
             lineClamp={2}
+            component={Link}
+            to={`/products/${value.productId}`}
           >
             {value.title}
-          </Text>
-          <Text
-            lineClamp={2}
-            size="xs"
-            sx={{ fontSize: smMatch ? "0.6rem" : "" }}
-          >
+          </Anchor>
+          <Text lineClamp={2} size="xs">
             {value.description}
           </Text>
-          {smMatch && (
+          {mdMatch && (
             <Text size="xs" color="orange">
               {value.price}$
             </Text>
           )}
         </td>
-        {!smMatch && (
+        {!mdMatch && (
           <td>
             <Text weight={600} size="sm">
               {value.price}$
@@ -81,34 +87,50 @@ export default function CartTable() {
           />
         </td>
         <td>
-          <Text
-            weight={600}
-            size="sm"
-            sx={{ fontSize: smMatch ? "0.6rem" : "" }}
-          >
+          <Text weight={600} size="sm">
             {value.total?.toFixed(2)}$
           </Text>
+        </td>
+        <td>
+          <ActionIcon
+            variant="transparent"
+            onClick={() => {
+              setRemoveItem(value.productId);
+              dispatch(setType({ type: "cartRemove" }));
+              dispatch(openModal());
+            }}
+          >
+            <MdOutlineCancel color="red" size={smMatch ? 15 : 20} />
+          </ActionIcon>
         </td>
       </tr>
     ));
   return (
     <Box>
-      <LoadingOverlay visible={loading} />
-      <Table horizontalSpacing={smMatch ? "xs" : "xl"}>
+      {type === "cartRemove" && (
+        <OpenModal
+          header="Are you sure sure want to remove this item from your cart?"
+          cb={() => removeHandler()}
+          btnText="Confirm"
+          size="sm"
+        />
+      )}
+      <Table
+        horizontalSpacing={smMatch ? "xs" : "xl"}
+        fontSize={smMatch ? "xs" : "sm"}
+      >
         <thead>
-          <tr>
+          <tr style={{ flexWrap: "nowrap" }}>
             <th style={{ width: "10%" }}>Image</th>
-            <th style={{ width: "60%" }}>Product</th>
-            {!smMatch && <th>Price</th>}
-            <th style={{ width: "2%" }}>Quantity</th>
-            <th>Total</th>
+            <th style={{ width: "40%" }}>Product</th>
+            {!mdMatch && <th>Price</th>}
+            <th style={{ width: "10%" }}>Quantity</th>
+            <th style={{ width: "10%" }}>Total</th>
+            <th></th>
           </tr>
         </thead>
-        {finalValue.products && <tbody>{TableBody}</tbody>}
+        {value.products && <tbody>{TableBody}</tbody>}
       </Table>
-      <Text weight={600}>
-        {finalValue.total ? finalValue.total.toFixed(2) : 0}$
-      </Text>
     </Box>
   );
 }
@@ -124,32 +146,34 @@ function IncDecBtn({
 }) {
   const smMatch = Matches().smMatches;
   return (
-    <Group
-      sx={{
-        flexWrap: "nowrap",
-      }}
-    >
-      <ActionIcon
-        variant="transparent"
-        color="dark"
-        size={smMatch ? "xs" : "md"}
-        onClick={() =>
-          updateQuantity(productId, quantity > 1 ? quantity - 1 : quantity)
-        }
+    <Box sx={{ position: "relative" }}>
+      <Group
+        sx={{
+          flexWrap: "nowrap",
+          position: "relative",
+        }}
+        spacing={smMatch ? 3 : 10}
       >
-        -
-      </ActionIcon>
-      <Text size="sm" sx={{ fontSize: smMatch ? "0.6rem" : "" }}>
-        {quantity}
-      </Text>
-      <ActionIcon
-        variant="transparent"
-        color="dark"
-        size={smMatch ? "xs" : "md"}
-        onClick={() => updateQuantity(productId, quantity + 1)}
-      >
-        +
-      </ActionIcon>
-    </Group>
+        <ActionIcon
+          variant="transparent"
+          color="dark"
+          size={smMatch ? "xs" : "md"}
+          onClick={() =>
+            updateQuantity(productId, quantity > 1 ? quantity - 1 : quantity)
+          }
+        >
+          -
+        </ActionIcon>
+        <Text size="sm">{quantity}</Text>
+        <ActionIcon
+          variant="transparent"
+          color="dark"
+          size={smMatch ? "xs" : "md"}
+          onClick={() => updateQuantity(productId, quantity + 1)}
+        >
+          +
+        </ActionIcon>
+      </Group>
+    </Box>
   );
 }

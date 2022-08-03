@@ -13,7 +13,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import ItemsList from "../components/DealsComponents/ItemsList";
+import ItemsList from "../components/ItemsList/ItemsList";
 import Matches from "../cors/MediaQuery";
 import axios from "axios";
 import { RootObject } from "../cors/types/ItemTypes";
@@ -65,26 +65,25 @@ export default function Deals() {
     setActiveTab(active);
     setActivePage(1);
     fetchData(); //TODO:
-    navigate({
-      pathname: tabKey !== "featured" ? tabKey : "",
-      search: createSearchParams({ page: "1" }).toString(),
-    });
+    navigate(tabKey !== "featured" ? tabKey : "");
   };
 
   //Change page function
   const changeActivePage = (e: number) => {
     setActivePage(e);
-    const searchParam = createSearchParams({ page: e.toString() });
-    setSearchParams(searchParam);
-    fetchData(); //TODO:
+    if (e === 1) {
+      navigate(activeTab === 0 ? "" : "tech");
+    } else {
+      const searchParam = createSearchParams({ page: e.toString() });
+      setSearchParams(searchParam);
+      fetchData(); //TODO:
+    }
   };
 
   //set page with query and page
   useEffect(() => {
     //change query string to number type
     const queryToNum: number = query ? parseInt(query) : 1;
-
-    queryToNum === 1 && setSearchParams(createSearchParams({ page: "1" }));
 
     let tabName: number = products ? 1 : 0;
 

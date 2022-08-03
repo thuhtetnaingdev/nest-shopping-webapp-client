@@ -6,6 +6,7 @@ type MethodType =
   | "logout"
   | "deleteAddress"
   | "createAddress"
+  | "cartRemove"
   | "";
 
 interface InitialState {
